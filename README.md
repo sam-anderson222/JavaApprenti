@@ -1,2 +1,3 @@
 # JavaApprenti
-Repo for java projects/exercises
+## Exercises
+* Operator exercise in the "Operator" branch
