@@ -1,3 +1,3 @@
 # JavaApprenti
 ## Exercises
-* Operator exercise in the "Operator" branch
+* Subfolders hold their respective exercises.
