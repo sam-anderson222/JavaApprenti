@@ -51,7 +51,7 @@ public class ShoppingCartApp {
 
         // Goodbye text
         System.out.println("\n(Thank you for using this app. Goodbye!)\n");
-
+    
 
 
     }
