@@ -32,7 +32,7 @@ public class ShoppingCartApp {
             System.out.print("Shipping? (standard / overnight / two-day)\n>> ");
             shipping = console.nextLine();
             // Prompt for promo code
-            System.out.print("Promo code for free shipping?\n>> ");
+            System.out.print("Promo code for free shipping? (only applies for standard shipping)\n>> ");
             promoCode = console.nextLine();
             System.out.print("Confirm order? (y/n)\n>> ");
         } while(!console.nextLine().equals("y"));
@@ -60,7 +60,7 @@ public class ShoppingCartApp {
         switch (shipping) {
             case "standard":
                 shippingCost = standardShipping;
-                if (taxExempt.equals("FREE")) {
+                if (promoCode.equals("FREE")) {
                     shippingCost = 0;
                 }
                 break;
