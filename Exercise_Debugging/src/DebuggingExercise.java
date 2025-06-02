@@ -18,7 +18,7 @@ public class DebuggingExercise {
     This is helpful as it allow the programmer to check if the value stored in the program are what's to be expected or if there is an error.
     For example, during this exercise, the memory state panel allowed me to the 'total' which was being calculated inside the calculateSum function.
     I saw that the first number added to the total wasn't 5, but 10, which gave me a hint at where a possible bug in the program could be located.
-
+ 
      */
 
     public static void main(String[] args) {
