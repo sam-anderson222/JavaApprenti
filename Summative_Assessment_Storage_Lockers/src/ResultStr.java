@@ -1,8 +1,8 @@
-public class Result {
+public class ResultStr {
     private final boolean status;
     private final String message;
 
-    public Result(boolean status, String message){
+    public ResultStr(boolean status, String message){
         this.status = status;
         this.message = message;
     }
