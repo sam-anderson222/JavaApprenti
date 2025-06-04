@@ -1,5 +1,5 @@
 public class Locker {
-    private String lockerPIN;
+    private final String lockerPIN;
 
     public Locker(String lockerPIN) {
         this.lockerPIN = lockerPIN;
@@ -11,5 +11,4 @@ public class Locker {
     }
 
     // No getter / setter as lockerPIN should be immutable after creation and hidden.
-
 }
