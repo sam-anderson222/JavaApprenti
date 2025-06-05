@@ -1,4 +1,4 @@
-// Handles locker functions / validation
+// Handles locker functions / validation.
 
 public class LockerService {
     private Locker[] lockers;
@@ -15,7 +15,7 @@ public class LockerService {
 
             lockers[freeLockerIndex] = new Locker(lockerPIN);
             // One is added to the ResultStr's String to make 1-based index instead of 0-based.
-            return new ResultStr(true, String.format("Locker #%d rented. Your PIN is %s%n", freeLockerIndex + 1, lockerPIN));
+            return new ResultStr(true, String.format("Locker #%d rented. Your PIN is %s", freeLockerIndex + 1, lockerPIN));
 
         } else {
             // else if no locker is available

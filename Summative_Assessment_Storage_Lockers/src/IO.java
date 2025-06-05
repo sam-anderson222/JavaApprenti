@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
-// Only handles IO
+// Handles IO and other utilities like creating / validating PINs.
 
 public class IO {
     private static Scanner io = new Scanner(System.in);
@@ -16,8 +16,9 @@ public class IO {
         System.out.println("Any other key to exit");
     }
 
+    // Print message with nice formatting
     public static void printResult(ResultStr result) {
-        System.out.println(result.getMessage());
+        System.out.printf("(%s)%n", result.getMessage());
     }
 
     public static String getUserString(String prompt) {
@@ -37,6 +38,9 @@ public class IO {
             }
         }
     }
+
+
+    // PIN methods
 
     // Randomly generate a 4-digit PIN that is returned as a string
     public static String generatePIN() {
