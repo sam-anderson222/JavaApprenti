@@ -7,16 +7,21 @@ public class IO {
     private static Scanner io = new Scanner(System.in);
     private static Random rng = new Random();
 
-    public static void printMenu() {
+    public static void printMenu(boolean notAllLockersRented) {
         System.out.println("What would you like to do?");
-        System.out.println("(1). Rent a Locker");
-        System.out.println("(2). Access a Locker");
-        System.out.println("(3). Release a Locker");
+        if (notAllLockersRented) {
+            System.out.println("(1). Rent a Locker");
+            System.out.println("(2). Access a Locker");
+            System.out.println("(3). Release a Locker");
+        } else {
+            System.out.println("(1). Access a Locker");
+            System.out.println("(2). Release a Locker");
+        }
         System.out.println("---");
         System.out.println("Any other key to exit");
     }
 
-    // Print message with nice formatting
+    // Print message with extra formatting.
     public static void printResult(ResultStr result) {
         System.out.printf("(%s)%n", result.getMessage());
     }
@@ -26,7 +31,7 @@ public class IO {
         return io.nextLine();
     }
 
-    // Asks for a string, user is reprompted until
+    // Asks for a string, user is reprompted until valid input is received.
     public static int getUserInt(String prompt) {
         // Ensure user input a number
         while (true) {

@@ -36,7 +36,7 @@ public class LockerService {
 
     // Check if a received lockerID is a valid index and the locker at that index is being rented.
     public ResultStr isValidLockerID(int lockerID) {
-        if ((lockerID >= 1 && lockerID <= lockers.length)) { // If the locker ID is a valid index in the lockers array.
+        if ((lockerID >= 1 && lockerID <= lockers.length)) { // If the locker ID is at a valid index in the lockers array.
             if (lockers[lockerID - 1] == null) { // Checks if the locker is currently not being rented. (Goes from 1-based index to 0)
                 return new ResultStr(false, "Locker at this ID is not currently being rented.");
             } // If the locker is at a valid index and being rented, then return true.
