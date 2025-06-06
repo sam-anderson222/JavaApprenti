@@ -1,8 +1,9 @@
 public class MainGameLogic {
 
     /*
-    Battleship
+    Battleships
     Board (Made up of 5 ships of differing sizes on 10x10 board)
+    BoardUtils handles board functions.
     Tiles (Makes up the board, can have a ship or be hit.)
     Ships (A ship with a length, position, and rotation on the board. One of 5 types)
     Players (Each player has their own board with their own orientation of their ships)
@@ -10,6 +11,8 @@ public class MainGameLogic {
 
      */
     public static void main(String[] args) {
+        Board p1Board = new Board();
 
+        BoardUtils.printBoard(p1Board.getGameBoard());
     }
 }
