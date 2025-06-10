@@ -1,11 +1,9 @@
 import java.util.Scanner;
-import java.util.Random;
 
-// Handles IO and other utilities like creating / validating PINs.
+// Handles IO
 
 public class IO {
-    private static Scanner io = new Scanner(System.in);
-    private static Random rng = new Random();
+    private static final Scanner io = new Scanner(System.in);
 
     public static void printMenu(boolean notAllLockersRented) {
         System.out.println("What would you like to do?");
@@ -44,35 +42,9 @@ public class IO {
         }
     }
 
-
-    // PIN methods
-
-    // Randomly generate a 4-digit PIN that is returned as a string
-    public static String generatePIN() {
-        String PIN = "";
-        // number 0 - 9 will be appended one-by-one until a 4-digit PIN String is created.
-        for (int i = 0; i < 4; i++) {
-            PIN += Integer.toString(rng.nextInt(10));
-        }
-        return PIN;
-    }
-
-    // Checks if a string is in PIN format. (4 length string with only numbers)
-    public static boolean isPINFormat(String PIN) {
-        if (PIN.length() != 4) { // If PIN isn't 4-digits
-            return false;
-        }
-        // If PIN is correct length, then each char is checked to see if it is a number.
-        for (int i = 0; i < PIN.length(); i++) {
-            if (!isNumber(PIN.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // Return true if char is a number 0 - 9.
-    private static boolean isNumber(char c) {
-        return (c >= '0' && c <= '9'); // Compares ascii values to determine if char is a number or not.
+    // Confirms if a user wishes to release their locker.
+    public static boolean confirmRelease() {
+        String user_input = IO.getUserString("Confirm locker release? (y/n): ");
+        return user_input.equalsIgnoreCase("y");
     }
 }
