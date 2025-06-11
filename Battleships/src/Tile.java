@@ -8,7 +8,7 @@ public class Tile {
     }
 
     // Ships can't move after being placed, so there is no setter function for ships.
-    public boolean getIsShipTile() {
+    public boolean getShipTile() {
         return shipTile;
     }
 

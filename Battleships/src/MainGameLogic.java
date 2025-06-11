@@ -12,7 +12,14 @@ public class MainGameLogic {
      */
     public static void main(String[] args) {
         Board p1Board = new Board();
+        Board p2Board = new Board();
 
+        IO.printMessage("Your Board: ");
         BoardUtils.printBoard(p1Board.getGameBoard());
+
+        IO.printMessage("Opponent's Board: ");
+        BoardUtils.printBoard(p2Board.getGameBoard());
+
+
     }
 }
