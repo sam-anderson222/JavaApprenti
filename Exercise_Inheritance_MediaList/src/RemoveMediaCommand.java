@@ -16,7 +16,5 @@ public class RemoveMediaCommand {
         } else {
             TerminalUtils.displayMessage("Error, could not remove! Invalid choice, no media exists at index #" + userInput );
         }
-
     }
-
 }

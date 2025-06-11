@@ -45,8 +45,4 @@ import java.util.ArrayList;
      public boolean isEmpty() {
          return mediaList.isEmpty();
      }
-
-
-
-
 }

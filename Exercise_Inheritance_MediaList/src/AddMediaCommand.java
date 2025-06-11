@@ -1,6 +1,6 @@
 public class AddMediaCommand {
     // AddMediaCommand has its own menu, instead of making one workflow class for each menu option (adding a book / video / image)
-    // I instead created just one workflow class for this workflow class which
+    // I instead created just one workflow class for this workflow class
     public static void execute(MediaService mediaService) {
         TerminalUtils.displayAddMediaMenu();
         String userInput = TerminalUtils.getMenuChoice(new String[]{"1", "2", "3", "4"});
