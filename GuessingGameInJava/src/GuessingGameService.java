@@ -1,12 +1,10 @@
 import java.util.Random;
 
 public class GuessingGameService {
-    private int secretNumber; // The number the player is trying to guess.
-    private int maxNumber; // (The secret number will be between 1 and the maxNumber)
+    private final int secretNumber; // The number the player is trying to guess.
 
     public GuessingGameService(int maxNumber) {
         Random rng = new Random();
-        this.maxNumber = maxNumber;
 
         secretNumber = rng.nextInt(1, maxNumber + 1); // Plus one as is exclusive.
     }
