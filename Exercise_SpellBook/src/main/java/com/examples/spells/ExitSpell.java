@@ -11,4 +11,8 @@ public class ExitSpell implements Spell{
         return "exit";
     }
 
+    public String getDescription() {
+        return "A portal opens beneath you. Goodbye, wizard! (exits program)";
+    }
+
 }

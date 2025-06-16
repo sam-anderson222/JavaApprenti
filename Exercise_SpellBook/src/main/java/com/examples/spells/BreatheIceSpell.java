@@ -10,4 +10,8 @@ public class BreatheIceSpell implements Spell {
     public String getIncantation() {
         return "frio";
     }
+
+    public String getDescription() {
+        return "You breathe a mist of razor-sharp ice from your mouth.";
+    }
 }

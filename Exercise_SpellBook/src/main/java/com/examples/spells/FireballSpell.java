@@ -7,7 +7,12 @@ public class FireballSpell implements Spell {
         System.out.println("You shoot a fireball at your enemies.");
     }
 
+
     public String getIncantation() {
         return "fuego";
+    }
+
+    public String getDescription() {
+        return "You shoot a fireball at your enemies.";
     }
 }

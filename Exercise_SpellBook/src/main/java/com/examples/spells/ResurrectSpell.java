@@ -10,4 +10,8 @@ public class ResurrectSpell implements Spell {
     public String getIncantation() {
         return "muerto";
     }
+
+    public String getDescription() {
+        return "A shimmering light blankets the ground in front of you. The dead rises from the soil.";
+    }
 }
