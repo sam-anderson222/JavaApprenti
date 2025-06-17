@@ -8,7 +8,7 @@ public class TerminalUtils {
     public static void printMenu() {
         System.out.println("\n=== Spellbook ===");
         System.out.println("(1). Recite a Spell");
-        System.out.println("(2). Help");
+        System.out.println("(2). Consult Codex (Help)");
         System.out.println("-----");
     }
 
