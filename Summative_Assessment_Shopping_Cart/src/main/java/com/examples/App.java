@@ -1,38 +1,34 @@
 package com.examples;
 
-import com.examples.Workflows.DisplayCartWorkflow;
-
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) {
-        CartService cartService = new CartService(); // Holds the shopper's cart.
-        boolean runShoppingCartProgram = true;
+        boolean runProgram = true;
 
-        while (runShoppingCartProgram) {
+
+        // Main app loop
+        while (runProgram) {
             TerminalUtils.printMenu();
-            String userChoice = TerminalUtils.getUserStr("Enter an option: ");
-            switch (userChoice) {
-                case "1": // Display Cart Workflow
-                    DisplayCartWorkflow.execute(cartService);
+            String userInput = TerminalUtils.getUserStr("Enter an option: ");
+
+            switch (userInput) {
+                case "1":
                     break;
-                case "2": // Remove Item Workflow
+                case "2":
                     break;
-                case "3": // Add Item Workflow
+                case "3":
                     break;
-                case "4": // Checkout Workflow
+                case "4":
                     break;
-                case "5": // Exit Program
-                    runShoppingCartProgram = false;
+                case "5":
+                    runProgram = false;
                     break;
                 default:
-                    TerminalUtils.printMessage("Error - Unknown input received. Please try again.");
+                    TerminalUtils.printMessage("Error, unknown choice selected. Please try again.");
                     break;
             }
         }
 
-        // Thank you for using message
+        // Thank you message / end of program
         TerminalUtils.printMessage("\n(Thank you for using the shopping cart application!)");
     }
 }
