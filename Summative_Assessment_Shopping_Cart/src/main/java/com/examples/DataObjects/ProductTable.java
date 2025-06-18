@@ -17,7 +17,7 @@ public class ProductTable {
         productLookupTable.put("1001", new Apple("Opal Apple", "Yellow Sweet & Tart Apple", 1.99, true));
         productLookupTable.put("1002", new Apple("Cosmic Crisp Apple", "Red & Crisp Apple", 2.49, false));
         productLookupTable.put("2001", new Bread("French Loaf", "Freshly cooked French bread", 1.29, true));
-        productLookupTable.put("2002", new Bread("Sandwich Bread", "White bread for sandwiches", 1.29, false));
+        productLookupTable.put("2002", new Bread("Sandwich Bread", "White bread for sandwiches", 3.49, false));
     }
 
 

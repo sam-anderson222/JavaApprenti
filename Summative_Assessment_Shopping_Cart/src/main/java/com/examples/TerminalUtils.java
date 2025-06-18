@@ -1,5 +1,8 @@
 package com.examples;
 
+import com.examples.DataObjects.Product;
+
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class TerminalUtils {
@@ -13,6 +16,10 @@ public class TerminalUtils {
         System.out.println("(4). Checkout");
         System.out.println("(5). Exit");
         System.out.println("------");
+    }
+
+    public static void printProductTable(HashMap<String, Product> productTable) {
+        // TO DO THURSDAY OR FRIDAY
     }
 
     public static String getUserStr(String prompt) {
