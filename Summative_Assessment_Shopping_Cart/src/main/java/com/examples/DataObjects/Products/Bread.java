@@ -28,7 +28,7 @@ public class Bread extends ProductParentClass implements Product {
 
     @Override
     public String toString() {
-        return String.format("%-14s | $%-6.2f | Fresh:%7b | %-40s", productName, productPrice, isFresh, productDescription);
+        return String.format("%-16s | $%-6.2f | Fresh:%7b | %-40s", productName, productPrice, isFresh, productDescription);
     }
 
     public boolean getIsFresh() {

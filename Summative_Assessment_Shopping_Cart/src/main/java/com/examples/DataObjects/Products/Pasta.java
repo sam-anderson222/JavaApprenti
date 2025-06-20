@@ -3,13 +3,13 @@ package com.examples.DataObjects.Products;
 import com.examples.DataObjects.Product;
 import com.examples.DataObjects.ProductParentClass;
 
-public class Deli extends ProductParentClass implements Product {
-    private final boolean isKosher;
+public class Pasta extends ProductParentClass implements Product {
+    private final boolean isGlutenFree;
 
 
-    public Deli(String productName, String productDescription, double productPrice, boolean isKosher) {
+    public Pasta(String productName, String productDescription, double productPrice, boolean isGlutenFree) {
         super(productName,productDescription,productPrice);
-        this.isKosher = isKosher;
+        this.isGlutenFree = isGlutenFree;
     }
 
     @Override
@@ -29,10 +29,10 @@ public class Deli extends ProductParentClass implements Product {
 
     @Override
     public String toString() {
-        return String.format("%-16s | $%-6.2f | Kosher:%6b | %-40s", productName, productPrice, isKosher, productDescription);
+        return String.format("%-16s | $%-6.2f | Gluten:%6b | %-40s", productName, productPrice, isGlutenFree, productDescription);
     }
 
-    public boolean getIsKosher() {
-        return isKosher;
+    public boolean getIsGlutenFree() {
+        return isGlutenFree;
     }
 }

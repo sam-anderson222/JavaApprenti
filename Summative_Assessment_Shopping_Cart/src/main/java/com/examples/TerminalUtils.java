@@ -23,7 +23,7 @@ public class TerminalUtils {
 
     public static void printProductTable(HashMap<String, Product> productTable) {
         System.out.println("==== Products Available ====");
-        System.out.println("  ID    Name            Price     Extra           Description");
+        System.out.println("  ID    Name              Price     Extra           Description");
         for (String key: productTable.keySet()) {
             Product p = productTable.get(key);
             System.out.printf("%5s - %s%n", key,  p.toString());
@@ -31,16 +31,25 @@ public class TerminalUtils {
     }
 
     public static void printCart(ArrayList<CartEntry> cart) {
-        if (cart.isEmpty()) {
-            System.out.println("(Cart is currently empty)");
-        } else {
-            System.out.println("==== Current Cart ====");
-            for (int i = 0; i < cart.size(); i++) {
-                CartEntry cartItem = cart.get(i);
-                System.out.printf("(%2d). %4dx  ==>  %s%n", i + 1, cartItem.getProductQuantity(), cartItem.getProduct().toString());
-            }
-            System.out.println("---------------\n");
+        System.out.println("==== Current Cart ====");
+        for (int i = 0; i < cart.size(); i++) {
+            CartEntry cartItem = cart.get(i);
+            System.out.printf("(%2d). %4dx  ==>  %s%n", i + 1, cartItem.getProductQuantity(), cartItem.getProduct().toString());
         }
+        System.out.println("---------------\n");
+    }
+
+    public static void printCheckOut(CartService cartService) {
+        ArrayList<CartEntry> cart = cartService.getCart();
+
+        // Print checkout
+        System.out.println("==== Current Cart ====");
+        for (int i = 0; i < cart.size(); i++) {
+            CartEntry cartItem = cart.get(i);
+            System.out.printf("(%2d). %4dx  ==>  %s | $%.2f%n", i + 1, cartItem.getProductQuantity(), cartItem.getProduct().toString(), cartItem.getCartEntryPrice());
+        }
+        System.out.println("<+++-----------------------------+++>");
+        System.out.printf("Total: $%.2f%n", cartService.calculateTotal());
     }
 
     public static String getUserStr(String prompt) {

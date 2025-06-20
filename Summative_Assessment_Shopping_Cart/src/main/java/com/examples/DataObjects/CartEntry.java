@@ -22,6 +22,10 @@ public class CartEntry {
         this.productQuantity -= productQuantity;
     }
 
+    public void addProductQuantity(int productQuantity) {
+        this.productQuantity += productQuantity;
+    }
+
     // Returns the price of this cart entry (Product unit price * Quantity being purchased)
     public double getCartEntryPrice() {
         return product.getProductPrice() * productQuantity;

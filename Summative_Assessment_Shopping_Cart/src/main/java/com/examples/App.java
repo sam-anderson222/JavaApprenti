@@ -2,16 +2,13 @@ package com.examples;
 
 import com.examples.DataObjects.CartEntry;
 import com.examples.Workflows.AddItemWorkflow;
+import com.examples.Workflows.CheckoutWorkflow;
 import com.examples.Workflows.DisplayCartWorkflow;
 import com.examples.Workflows.RemoveItemWorkflow;
 
 public class App {
     public static void main(String[] args) {
         CartService cartService = new CartService(); // Holds the user's cart.
-
-        // Test data (to remove)
-        cartService.addItemToCart(cartService.getProductWithID("1001").getData(), 12);
-
         boolean runProgram = true;
 
 
@@ -31,6 +28,7 @@ public class App {
                     AddItemWorkflow.execute(cartService);
                     break;
                 case "4": // Checkout
+                    CheckoutWorkflow.execute(cartService);
                     break;
                 case "5":// Exit program
                     runProgram = false;

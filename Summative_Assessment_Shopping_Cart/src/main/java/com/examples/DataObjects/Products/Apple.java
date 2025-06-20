@@ -28,7 +28,7 @@ public class Apple extends ProductParentClass implements Product {
 
     @Override
     public String toString() {
-        return String.format("%-14s | $%-6.2f | Organic:%5b | %-40s", productName, productPrice, isOrganic, productDescription);
+        return String.format("%-16s | $%-6.2f | Organic:%5b | %-40s", productName, productPrice, isOrganic, productDescription);
     }
 
     public boolean getIsOrganic() {

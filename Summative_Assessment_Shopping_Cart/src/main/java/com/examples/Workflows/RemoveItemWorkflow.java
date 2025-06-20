@@ -16,6 +16,13 @@ public class RemoveItemWorkflow {
 
         // Get user index of item they wish to remove
         int itemIndex = TerminalUtils.getUserInt("Enter the index number of the item you wish to remove: ");
+
+        // if invalid index, kick user back to main menu.
+        if (itemIndex < 1 || itemIndex > cartService.getCart().size()) {
+            TerminalUtils.printMessage("Error. Item with this index number could not be found! Please try again.");
+            return;
+        }
+
         int itemQuantityToRemove = TerminalUtils.getUserInt("Enter the number of units you wish to remove: ");
 
         Result<String> itemRemovalResult = cartService.removeItemFromCart(itemIndex, itemQuantityToRemove);

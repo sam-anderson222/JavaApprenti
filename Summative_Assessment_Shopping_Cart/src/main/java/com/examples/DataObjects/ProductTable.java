@@ -1,8 +1,7 @@
 package com.examples.DataObjects;
 
-import com.examples.DataObjects.Products.Apple;
-import com.examples.DataObjects.Products.Bread;
-import com.examples.DataObjects.Products.Deli;
+import com.examples.DataObjects.Products.*;
+
 
 import java.util.HashMap;
 
@@ -21,6 +20,9 @@ public class ProductTable {
         productLookupTable.put("2002", new Bread("Sandwich Bread", "White Bread for Sandwiches", 3.49, false));
         productLookupTable.put("3001", new Deli("Kosher Beef", "Thinly Sliced Beef for Sandwiches", 7.98, true));
         productLookupTable.put("3002", new Deli("Baby Back Ribs", "Uncooked Fresh Baby Back Ribs", 8.99, false));
+        productLookupTable.put("3003", new Deli("Sliced American", "Deli Cut American Cheese", 4.59, false));
+        productLookupTable.put("4001", new Pasta("Penne", "1 Pound of Box Penne", 2.19, false));
+        productLookupTable.put("4002", new Pasta("GF Spaghetti", "Gluten-Free Spaghetti", 3.50, true));
     }
 
     // Getter function
