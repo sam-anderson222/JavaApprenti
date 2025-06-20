@@ -26,6 +26,11 @@ public class Apple extends ProductParentClass implements Product {
         return productPrice;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%-14s | $%-6.2f | Organic:%5b | %-40s", productName, productPrice, isOrganic, productDescription);
+    }
+
     public boolean getIsOrganic() {
         return isOrganic;
     }

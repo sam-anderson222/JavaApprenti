@@ -1,7 +1,17 @@
 package com.examples;
 
+import com.examples.DataObjects.CartEntry;
+import com.examples.Workflows.AddItemWorkflow;
+import com.examples.Workflows.DisplayCartWorkflow;
+import com.examples.Workflows.RemoveItemWorkflow;
+
 public class App {
     public static void main(String[] args) {
+        CartService cartService = new CartService(); // Holds the user's cart.
+
+        // Test data (to remove)
+        cartService.addItemToCart(cartService.getProductWithID("1001").getData(), 12);
+
         boolean runProgram = true;
 
 
@@ -11,15 +21,18 @@ public class App {
             String userInput = TerminalUtils.getUserStr("Enter an option: ");
 
             switch (userInput) {
-                case "1":
+                case "1": // Display the cart
+                    DisplayCartWorkflow.execute(cartService);
                     break;
-                case "2":
+                case "2": // Remove item from cart
+                    RemoveItemWorkflow.execute(cartService);
                     break;
-                case "3":
+                case "3": // Add item from cart
+                    AddItemWorkflow.execute(cartService);
                     break;
-                case "4":
+                case "4": // Checkout
                     break;
-                case "5":
+                case "5":// Exit program
                     runProgram = false;
                     break;
                 default:

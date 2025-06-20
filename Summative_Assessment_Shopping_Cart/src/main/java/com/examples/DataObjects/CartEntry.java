@@ -18,6 +18,10 @@ public class CartEntry {
         return productQuantity;
     }
 
+    public void removeProductQuantity(int productQuantity) {
+        this.productQuantity -= productQuantity;
+    }
+
     // Returns the price of this cart entry (Product unit price * Quantity being purchased)
     public double getCartEntryPrice() {
         return product.getProductPrice() * productQuantity;
