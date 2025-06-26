@@ -1,6 +1,7 @@
 package com.examples.repository;
 
 import com.examples.model.Book;
+import com.examples.model.Result;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -68,10 +69,10 @@ public class CsvRepository implements LibraryRepository {
     }
 
     @Override
-    public boolean addBook(String bookIdentifier, Book book) {
+    public Result<String> addBook(String bookIdentifier, Book book) {
         libraryCatalog.put(bookIdentifier, book);
         save();
-        return true;
+        return new Result<>("Book added", true);
     }
 
     @Override
@@ -87,5 +88,10 @@ public class CsvRepository implements LibraryRepository {
     @Override
     public HashMap<String, Book> getLibraryCatalog() {
         return libraryCatalog;
+    }
+
+    @Override
+    public Book getBook(String bookIdentifier) {
+        return libraryCatalog.get(bookIdentifier);
     }
 }
