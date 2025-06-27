@@ -9,11 +9,13 @@ import java.util.HashMap;
 
 public class ReservationCsv implements ReservationRepository {
     HashMap<String, ArrayList<Passenger>> reservations;
+    private String filePath;
 
-    public ReservationCsv() {
+    public ReservationCsv(String filePath) {
+        this.filePath = filePath;
         this.reservations = new HashMap<>();
     }
-
+ 
     @Override
     public void load() {
 
