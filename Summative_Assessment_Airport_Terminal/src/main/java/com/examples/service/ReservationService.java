@@ -1,5 +1,6 @@
 package com.examples.service;
 
+import com.examples.model.Flight;
 import com.examples.model.Passenger;
 import com.examples.repository.ReservationRepository;
 
@@ -13,11 +14,23 @@ public class ReservationService {
         this.repository = repository;
     }
 
-    public void addPassenger(String flightNumber, Passenger passenger) {
-        repository.addPassenger(flightNumber, passenger);
+    public void addReservation(String flightNumber, Passenger passenger) {
+        repository.addReservation(flightNumber, passenger);
+    }
+
+    public ArrayList<Passenger> getPassengersFromFlight(String flightNumber) {
+        return repository.getPassengersFromFlight(flightNumber);
+    }
+
+    public void addFlight(String flightNumber, Flight flight) {
+        repository.addFlight(flightNumber, flight);
     }
 
     public HashMap<String, ArrayList<Passenger>> getReservations() {
         return repository.getReservations();
+    }
+
+    public HashMap<String, Flight> getFlights() {
+        return repository.getFlights();
     }
 }

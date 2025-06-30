@@ -1,8 +1,9 @@
 package com.examples;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import com.examples.model.AircraftTable;
+import com.examples.model.CommercialAircraft;
+import com.examples.model.Flight;
+import com.examples.model.Passenger;
 import com.examples.repository.ReservationCsv;
 import com.examples.service.ReservationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ReservationCsvTest {
     private ReservationService rs;
@@ -26,9 +31,61 @@ public class ReservationCsvTest {
 
 
     @Test
-    @DisplayName("Can create reservation hash map.")
+    @DisplayName("Can create reservation table.")
     void canCreateReservationTable() {
         assertNotNull(rs.getReservations());
     }
+
+    @Test
+    @DisplayName("Can add reservation.")
+    void canAddReservation() {
+        Passenger p = new Passenger("Joe Smith", "P123");
+        rs.addReservation("AA101", p);
+
+        assertEquals(1, rs.getReservations().size());
+        assertEquals(p, rs.getReservations().get("AA101").get(0));
+    }
+
+
+    // I wanted to make it so flights can be added as flight data is needed alongside reservation data to make a proper save entry.
+    @Test
+    @DisplayName("Can add flight.")
+    void canAddFlight() {
+        AircraftTable table = new AircraftTable();
+        Flight f = new Flight("AA101", LocalDate.parse("2024-10-10"), new BigDecimal("299.99"), table.getAircraft("Boeing 737"));
+        rs.addFlight("AA101", f);
+
+        assertEquals(1, rs.getFlights().size());
+        assertEquals(f, rs.getFlights().get("AA101"));
+    }
+
+    @Test
+    @DisplayName("Can save and reload reservation.")
+    void canSaveReservation() {
+        // Adding aircraft
+        AircraftTable table = new AircraftTable();
+        Flight f = new Flight("AA101", LocalDate.parse("2024-10-10"), new BigDecimal("299.99"), table.getAircraft("Boeing 737"));
+        rs.addFlight("AA101", f);
+
+        // Adding reservation
+        Passenger p = new Passenger("Joe Smith", "P123");
+        rs.addReservation("AA101", p); // Flight is saved.
+
+        ReservationService rs2 = new ReservationService(new ReservationCsv("data/test/test_data.csv"));
+
+        assertEquals(1, rs2.getReservations().size());
+    }
+
+    @Test
+    @DisplayName("Can get passengers from flight.")
+    void canGetPassengersFromFlight() {
+        // Adding reservation
+        Passenger p = new Passenger("Joe Smith", "P123");
+        rs.addReservation("AA101", p); // Flight is saved.
+
+        assertEquals(1, rs.getPassengersFromFlight("AA101").size());
+        assertEquals(p, rs.getPassengersFromFlight("AA101").get(0)); // Get the first (and only) person from ArrayList.
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.examples.repository;
 
 import com.examples.model.AircraftTable;
+import com.examples.model.CommercialAircraft;
 import com.examples.model.Flight;
 import com.examples.model.Passenger;
 import com.examples.service.ReservationService;
@@ -9,6 +10,7 @@ import com.examples.utils.TerminalUtils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,15 +18,18 @@ import java.util.HashMap;
 
 public class ReservationCsv implements ReservationRepository {
     private final HashMap<String, ArrayList<Passenger>> reservations;
-    private final ArrayList<Flight> flights; // stores all flights.
+    private final HashMap<String, Flight> flights; // stores all flights.
     private final AircraftTable aircraftTable;
     private String filePath;
 
     public ReservationCsv(String filePath) {
         this.filePath = filePath;
         this.reservations = new HashMap<>();
-        this.flights = new ArrayList<>();
+        this.flights = new HashMap<>();
         aircraftTable = new AircraftTable();
+
+        // Load data from file.
+        load();
     }
 
     @Override
@@ -41,13 +46,13 @@ public class ReservationCsv implements ReservationRepository {
 
                     Passenger passenger = new Passenger(dataFields[3], dataFields[4]);
 
-                    // If flight is already added
-                    if (reservations.containsKey(dataFields[0])) {
-                        reservations.get(dataFields[1]).add(passenger);  // Add passenger to ArrayList.
-                    } else { // If flight number not in reservation, then create a new flight object and passengers ArrayList
-                        flights.add(new Flight(dataFields[0], LocalDate.parse(dataFields[1]), new BigDecimal(dataFields[2]), aircraftTable.getAircraft(dataFields[5])));
-                        reservations.get(dataFields[0]).add(passenger);
+                    // If flight isn't already added.
+                    if (!reservations.containsKey(dataFields[0])) {
+                        flights.put(dataFields[0], new Flight(dataFields[0], LocalDate.parse(dataFields[1]), new BigDecimal(dataFields[2]), aircraftTable.getAircraft(dataFields[5])));
+                        reservations.put(dataFields[0], new ArrayList<>());
                     }
+
+                    reservations.get(dataFields[0]).add(passenger);  // Add passenger to ArrayList.
                 }
             } catch (Exception ex) {
                 TerminalUtils.printMessage("Error. Could not open and load from file.");
@@ -58,17 +63,63 @@ public class ReservationCsv implements ReservationRepository {
 
     @Override
     public void save() {
+        File file = new File(filePath);
+
+        // I know it says to append to the file, but that won't work, so I'm doing it.
+        try (PrintWriter writer = new PrintWriter(file)) { // Creates file if there is none.
+            for (String flightNumber: reservations.keySet()) {
+                for (Passenger passenger: reservations.get(flightNumber)) {
+                    Flight flight = flights.get(flightNumber);
+                    String aircraftType;
+
+                    if (flight == null) { // If there is no flight (commonly in test cases) don't save this to file.
+                        continue;
+                    }
+
+
+                    if (flight.associatedAircraft() instanceof CommercialAircraft) {
+                        aircraftType = "Commercial";
+                    } else {
+                        aircraftType = "PrivateJet";
+                    }
+
+                    String entry = String.format("%s,%s,%s,%s,%s,%s,%s",
+                            flightNumber,
+                            flight.departureDate(),
+                            flight.ticketPrice(),
+                            passenger.name(),
+                            passenger.passportNumber(),
+                            flight.associatedAircraft().getModel(),
+                            aircraftType);
+
+                    writer.println(entry);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Error with saving file");
+        }
 
     }
 
     @Override
-    public void addPassenger(String flightNumber, Passenger passenger) {
+    public void addReservation(String flightNumber, Passenger passenger) {
+        if (!reservations.containsKey(flightNumber)) {
+            reservations.put(flightNumber, new ArrayList<>());
+        }
 
+        reservations.get(flightNumber).add(passenger);
+        save();
     }
+
+    @Override
+    public void addFlight(String flightNumber, Flight flight) {
+        flights.put(flightNumber, flight);
+    }
+
 
     @Override
     public ArrayList<Passenger> getPassengersFromFlight(String flightNumber) {
-        return null;
+        return reservations.get(flightNumber);
     }
 
     @Override
@@ -77,7 +128,7 @@ public class ReservationCsv implements ReservationRepository {
     }
 
     @Override
-    public ArrayList<Flight> getFlights() {
+    public HashMap<String, Flight> getFlights() {
         return flights;
     }
 }

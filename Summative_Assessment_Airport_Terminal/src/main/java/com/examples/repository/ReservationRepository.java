@@ -8,8 +8,9 @@ import java.util.HashMap;
 public interface ReservationRepository {
     void load();
     void save();
-    void addPassenger(String flightNumber, Passenger passenger);
+    void addReservation(String flightNumber, Passenger passenger);
+    void addFlight(String flightNumber, Flight flight);
     ArrayList<Passenger> getPassengersFromFlight(String flightNumber);
     HashMap<String, ArrayList<Passenger>> getReservations();
-    ArrayList<Flight> getFlights();
+    HashMap<String, Flight> getFlights();
 }
