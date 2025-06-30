@@ -17,4 +17,9 @@ public class PrivateJet extends Aircraft{
     public int getMaxSpeed() {
         return maxSpeed;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %d, %.1f, %b, %d", model, passengerCapacity, fuelCapacity, hasLuxuryService, maxSpeed);
+    }
 }

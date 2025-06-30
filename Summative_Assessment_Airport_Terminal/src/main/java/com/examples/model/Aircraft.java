@@ -22,4 +22,9 @@ public class Aircraft {
     public double getFuelCapacity() {
         return fuelCapacity;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %d, %.1f", model, passengerCapacity, fuelCapacity);
+    }
 }

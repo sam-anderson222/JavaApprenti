@@ -11,4 +11,9 @@ public class CommercialAircraft extends Aircraft{
     public String getAirlineName() {
         return airlineName;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %d, %.1f, %s", model, passengerCapacity, fuelCapacity, airlineName);
+    }
 }
