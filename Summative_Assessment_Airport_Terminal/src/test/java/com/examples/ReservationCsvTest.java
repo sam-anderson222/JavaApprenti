@@ -55,6 +55,14 @@ public class ReservationCsvTest {
     }
 
     @Test
+    @DisplayName("Exception is thrown when passenger is added to null flight.")
+    void throwsExceptionWhenPassengerAddedToInvalidFlight() {
+        Passenger p = new Passenger("Test", "Test");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {rs.addReservation("invalid flight number", p);});
+        assertEquals("Error, flightNumber is invalid.", exception.getMessage());
+    }
+
+    @Test
     @DisplayName("Exception is thrown if passengers list is gotten from invalid flightID.")
     void throwsExceptionWhenInvalidFlightID() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {rs.getPassengersFromFlight("error");});

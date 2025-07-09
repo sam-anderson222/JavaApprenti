@@ -101,6 +101,10 @@ public class ReservationCsv implements ReservationRepository {
             throw new IllegalArgumentException("Error, passenger is null.");
         }
 
+        if (!flightRepository.getFlights().containsKey(flightNumber)) {
+            throw new IllegalArgumentException("Error, flightNumber is invalid.");
+        }
+
         if (!reservations.containsKey(flightNumber)) {
             reservations.put(flightNumber, new ArrayList<>());
         }
@@ -112,7 +116,7 @@ public class ReservationCsv implements ReservationRepository {
 
     @Override
     public ArrayList<Passenger> getPassengersFromFlight(String flightNumber) {
-        if (!reservations.containsKey(flightNumber)) {
+        if (!flightRepository.getFlights().containsKey(flightNumber)) {
             throw new IllegalArgumentException("Error, flight does not exist.");
         }
 
