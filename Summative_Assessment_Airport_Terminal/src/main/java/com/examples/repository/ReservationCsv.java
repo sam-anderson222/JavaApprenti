@@ -112,6 +112,10 @@ public class ReservationCsv implements ReservationRepository {
 
     @Override
     public ArrayList<Passenger> getPassengersFromFlight(String flightNumber) {
+        if (!reservations.containsKey(flightNumber)) {
+            throw new IllegalArgumentException("Error, flight does not exist.");
+        }
+
         return reservations.get(flightNumber);
     }
 

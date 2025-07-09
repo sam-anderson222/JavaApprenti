@@ -55,6 +55,13 @@ public class ReservationCsvTest {
     }
 
     @Test
+    @DisplayName("Exception is thrown if passengers list is gotten from invalid flightID.")
+    void throwsExceptionWhenInvalidFlightID() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {rs.getPassengersFromFlight("error");});
+        assertEquals("Error, flight does not exist.", exception.getMessage());
+    }
+
+    @Test
     @DisplayName("Can save and reload reservation.")
     void canSaveReservation() {
         // Adding reservation
