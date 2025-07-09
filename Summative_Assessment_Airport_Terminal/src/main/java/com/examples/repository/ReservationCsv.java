@@ -99,6 +99,10 @@ public class ReservationCsv implements ReservationRepository {
 
     @Override
     public void addReservation(String flightNumber, Passenger passenger) {
+        if (passenger == null) {
+            throw new IllegalArgumentException("Error, passenger is null.");
+        }
+
         if (!reservations.containsKey(flightNumber)) {
             reservations.put(flightNumber, new ArrayList<>());
         }

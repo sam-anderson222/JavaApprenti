@@ -48,6 +48,13 @@ public class ReservationCsvTest {
     }
 
     @Test
+    @DisplayName("Exception is thrown if null passenger is added to flight.")
+    void throwsExceptionWhenNullPassengerAdded() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {rs.addReservation("test", null);});
+        assertEquals("Error, passenger is null.", exception.getMessage());
+    }
+
+    @Test
     @DisplayName("Can save and reload reservation.")
     void canSaveReservation() {
         // Adding reservation
