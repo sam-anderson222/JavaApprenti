@@ -26,8 +26,7 @@ public class ReservationCsv implements ReservationRepository {
         load();
     }
 
-    @Override
-    public void load() {
+    private void load() {
         File file = new File(filePath);
 
         if (file.exists()) { // Try to read from file if it exists.
@@ -57,8 +56,7 @@ public class ReservationCsv implements ReservationRepository {
 
     }
 
-    @Override
-    public void save() {
+    private void save() {
         File file = new File(filePath);
 
         // I know it says to append to the file, but that won't work, so I'm doing it.
