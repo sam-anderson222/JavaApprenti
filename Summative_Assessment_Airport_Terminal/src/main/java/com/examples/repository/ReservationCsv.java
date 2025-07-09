@@ -1,31 +1,25 @@
 package com.examples.repository;
 
-import com.examples.model.AircraftTable;
-import com.examples.model.CommercialAircraft;
-import com.examples.model.Flight;
-import com.examples.model.Passenger;
+import com.examples.model.*;
 import com.examples.service.ReservationService;
 import com.examples.utils.TerminalUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ReservationCsv implements ReservationRepository {
+    private final FlightRepository flightRepository; // Holds the flights
     private final HashMap<String, ArrayList<Passenger>> reservations;
-    private final HashMap<String, Flight> flights; // stores all flights.
     private final AircraftTable aircraftTable;
-    private String filePath;
+    private final String filePath;
 
-    public ReservationCsv(String filePath) {
+    public ReservationCsv(String filePath, FlightRepository flightRepository) {
         this.filePath = filePath;
+        this.flightRepository = flightRepository;
         this.reservations = new HashMap<>();
-        this.flights = new HashMap<>();
         aircraftTable = new AircraftTable();
 
         // Load data from file.
@@ -44,15 +38,17 @@ public class ReservationCsv implements ReservationRepository {
                     // [0] - flightNumber, [1] - departureDate, [2] - ticketPrice, [3] - passengerName, [4] - passportNumber, [5] - aircraftModel, [6] - aircraftType
                     String[] dataFields = dataEntry.split(","); // Split on comma as we are using CSV.
 
-                    Passenger passenger = new Passenger(dataFields[3], dataFields[4]);
+                    if (dataFields.length == 7) { // Only parse data if there is enough fields.
+                        Passenger passenger = new Passenger(dataFields[3], dataFields[4]);
 
-                    // If flight isn't already added.
-                    if (!reservations.containsKey(dataFields[0])) {
-                        flights.put(dataFields[0], new Flight(dataFields[0], LocalDate.parse(dataFields[1]), new BigDecimal(dataFields[2]), aircraftTable.getAircraft(dataFields[5])));
-                        reservations.put(dataFields[0], new ArrayList<>());
+                        // If flight isn't already added.
+                        if (!reservations.containsKey(dataFields[0])) {
+                            flightRepository.addFlight(dataFields[0], new Flight(dataFields[0], LocalDate.parse(dataFields[1]), new BigDecimal(dataFields[2]), aircraftTable.getAircraft(dataFields[5])));
+                            reservations.put(dataFields[0], new ArrayList<>());
+                        }
+
+                        reservations.get(dataFields[0]).add(passenger);  // Add passenger to ArrayList.
                     }
-
-                    reservations.get(dataFields[0]).add(passenger);  // Add passenger to ArrayList.
                 }
             } catch (Exception ex) {
                 TerminalUtils.printMessage("Error. Could not open and load from file.");
@@ -69,7 +65,7 @@ public class ReservationCsv implements ReservationRepository {
         try (PrintWriter writer = new PrintWriter(file)) { // Creates file if there is none.
             for (String flightNumber: reservations.keySet()) {
                 for (Passenger passenger: reservations.get(flightNumber)) {
-                    Flight flight = flights.get(flightNumber);
+                    Flight flight = flightRepository.getFlight(flightNumber);
                     String aircraftType;
 
                     if (flight == null) { // If there is no flight (commonly in test cases) don't save this to file.
@@ -111,11 +107,6 @@ public class ReservationCsv implements ReservationRepository {
         save();
     }
 
-    @Override
-    public void addFlight(String flightNumber, Flight flight) {
-        flights.put(flightNumber, flight);
-    }
-
 
     @Override
     public ArrayList<Passenger> getPassengersFromFlight(String flightNumber) {
@@ -129,6 +120,6 @@ public class ReservationCsv implements ReservationRepository {
 
     @Override
     public HashMap<String, Flight> getFlights() {
-        return flights;
+        return flightRepository.getFlights();
     }
 }

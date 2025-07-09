@@ -22,10 +22,6 @@ public class ReservationService {
         return repository.getPassengersFromFlight(flightNumber);
     }
 
-    public void addFlight(String flightNumber, Flight flight) {
-        repository.addFlight(flightNumber, flight);
-    }
-
     public HashMap<String, ArrayList<Passenger>> getReservations() {
         return repository.getReservations();
     }

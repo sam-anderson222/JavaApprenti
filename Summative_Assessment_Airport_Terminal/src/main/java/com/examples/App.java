@@ -1,6 +1,7 @@
 package com.examples;
 
 import com.examples.model.Passenger;
+import com.examples.repository.FlightHardcoded;
 import com.examples.repository.ReservationCsv;
 import com.examples.service.ReservationService;
 import com.examples.utils.TerminalUtils;
@@ -12,7 +13,7 @@ import com.examples.workflow.GetPassengersFromFlightWorkflow;
  */
 public class App {
     public static void main(String[] args) {
-        ReservationService rs = new ReservationService(new ReservationCsv("data/main/reservation.csv"));
+        ReservationService rs = new ReservationService(new ReservationCsv("data/main/reservation.csv", new FlightHardcoded()));
         boolean runProgram = true;
 
         while (runProgram) {
@@ -34,7 +35,7 @@ public class App {
             }
         }
 
-        // Thank you mesage
+        // Thank you message
         TerminalUtils.printMessage("\n(Thank you for using the airport terminal program)");
     }
 }

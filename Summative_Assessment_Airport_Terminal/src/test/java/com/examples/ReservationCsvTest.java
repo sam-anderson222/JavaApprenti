@@ -4,6 +4,7 @@ import com.examples.model.AircraftTable;
 import com.examples.model.CommercialAircraft;
 import com.examples.model.Flight;
 import com.examples.model.Passenger;
+import com.examples.repository.FlightHardcoded;
 import com.examples.repository.ReservationCsv;
 import com.examples.service.ReservationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ public class ReservationCsvTest {
             file.delete();
         }
 
-        rs = new ReservationService(new ReservationCsv("data/test/test_data.csv"));
+        rs = new ReservationService(new ReservationCsv("data/test/test_data.csv", new FlightHardcoded()));
     }
 
 
@@ -46,32 +47,14 @@ public class ReservationCsvTest {
         assertEquals(p, rs.getReservations().get("AA101").get(0));
     }
 
-
-    // I wanted to make it so flights can be added as flight data is needed alongside reservation data to make a proper save entry.
-    @Test
-    @DisplayName("Can add flight.")
-    void canAddFlight() {
-        AircraftTable table = new AircraftTable();
-        Flight f = new Flight("AA101", LocalDate.parse("2024-10-10"), new BigDecimal("299.99"), table.getAircraft("Boeing 737"));
-        rs.addFlight("AA101", f);
-
-        assertEquals(1, rs.getFlights().size());
-        assertEquals(f, rs.getFlights().get("AA101"));
-    }
-
     @Test
     @DisplayName("Can save and reload reservation.")
     void canSaveReservation() {
-        // Adding aircraft
-        AircraftTable table = new AircraftTable();
-        Flight f = new Flight("AA101", LocalDate.parse("2024-10-10"), new BigDecimal("299.99"), table.getAircraft("Boeing 737"));
-        rs.addFlight("AA101", f);
-
         // Adding reservation
         Passenger p = new Passenger("Joe Smith", "P123");
         rs.addReservation("AA101", p); // Flight is saved.
 
-        ReservationService rs2 = new ReservationService(new ReservationCsv("data/test/test_data.csv"));
+        ReservationService rs2 = new ReservationService(new ReservationCsv("data/test/test_data.csv", new FlightHardcoded()));
 
         assertEquals(1, rs2.getReservations().size());
     }
