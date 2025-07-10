@@ -8,9 +8,7 @@ import com.examples.utils.TerminalUtils;
 import com.examples.workflow.AddPassengerWorkflow;
 import com.examples.workflow.GetPassengersFromFlightWorkflow;
 
-/**
- * Hello world!
- */
+
 public class App {
     public static void main(String[] args) {
         ReservationService rs = new ReservationService(new ReservationCsv("data/main/reservation.csv", new FlightHardcoded()));

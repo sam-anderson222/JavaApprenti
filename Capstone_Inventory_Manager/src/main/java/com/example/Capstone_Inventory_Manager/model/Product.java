@@ -2,11 +2,12 @@ package com.example.Capstone_Inventory_Manager.model;
 
 import java.math.BigDecimal;
 
-public class Product {
+public abstract class Product {
     protected String productID;
     protected String productName;
     protected int quantity;
     protected BigDecimal price;
+    protected ProductTypes productType;
 
     public Product (String productID, String productName, int quantity, BigDecimal price) {
         this.productID = productID;
@@ -38,4 +39,10 @@ public class Product {
     public BigDecimal getPrice() {
         return price;
     }
+
+    public ProductTypes getProductType() {
+        return productType;
+    }
+
+    public abstract String getExtraInfo();
 }
