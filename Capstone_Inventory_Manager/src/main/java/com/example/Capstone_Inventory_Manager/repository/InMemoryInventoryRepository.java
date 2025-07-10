@@ -33,7 +33,12 @@ public class InMemoryInventoryRepository implements InventoryRepository{
 
     @Override
     public Result<Void> addStock(String productID, Product product) {
-        return null;
+        if (containsProduct(productID)) {
+            return new Result<>(false, String.format("Error, product with ID %s already exists.", productID), null);
+        }
+
+        inventory.put(productID, product);
+        return new Result<>(true, String.format("%s added", productID), null);
     }
 
     @Override
@@ -42,7 +47,7 @@ public class InMemoryInventoryRepository implements InventoryRepository{
     }
 
     @Override
-    public Result<Void> updatePrice(String productIdOrName, BigDecimal newPrice) {
+    public Result<Void> updateProduct(String productIdOrName, Product newProduct) {
         return null;
     }
 
@@ -62,5 +67,16 @@ public class InMemoryInventoryRepository implements InventoryRepository{
     @Override
     public HashMap<String, Product> getStockTable() {
         return inventory;
+    }
+
+    @Override
+    public boolean containsProduct(String productID) {
+        for (String id : inventory.keySet()) {
+            // If key already exists, return falling result.
+            if (id.equalsIgnoreCase(productID))
+                return true;
+        }
+
+        return false;
     }
 }

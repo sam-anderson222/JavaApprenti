@@ -11,9 +11,11 @@ public interface InventoryRepository {
 
     Result<Void> removeStock(String productIdOrName, int quantityToRemove);
 
-    Result<Void> updatePrice(String productIdOrName, BigDecimal newPrice);
+    Result<Void> updateProduct(String productIdOrName, Product newProduct);
 
     Result<Product> getProduct(String productIdOrName); // Can search on either productID or productName.
 
     HashMap<String, Product> getStockTable();
+
+    boolean containsProduct(String productID); // Have to create custom contains method, so can check productID while also ignoring case.
 }

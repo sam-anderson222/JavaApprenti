@@ -15,4 +15,9 @@ public class ElectronicProduct extends Product {
     public String getExtraInfo() {
         return brand;
     }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %s%nName: %s%nQuantity: %d%nPrice: $%.2f%nProduct Type:%s%nBrand: %s%n", productID, productName, quantity, price, productType,brand);
+    }
 }

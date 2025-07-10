@@ -1,6 +1,8 @@
 package com.example.Capstone_Inventory_Manager.view;
 
 import com.example.Capstone_Inventory_Manager.service.InventoryService;
+import com.example.Capstone_Inventory_Manager.view.InventoryCommands.AddProduct;
+import com.example.Capstone_Inventory_Manager.view.InventoryCommands.ViewProduct;
 import com.example.Capstone_Inventory_Manager.view.InventoryCommands.ViewStockTable;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +24,14 @@ public class Inventory {
 
             switch (userInput) {
                 case "1": // Add product
+                    AddProduct.execute(inventoryService);
                     break;
                 case "2": // Remove product
                     break;
                 case "3": // Update product
                     break;
                 case "4": // Get and print single product
+                    ViewProduct.execute(inventoryService);
                     break;
                 case "5": // Print entire stock
                     ViewStockTable.execute(inventoryService);

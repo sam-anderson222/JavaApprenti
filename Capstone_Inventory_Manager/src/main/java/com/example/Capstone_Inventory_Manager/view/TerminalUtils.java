@@ -3,6 +3,7 @@ package com.example.Capstone_Inventory_Manager.view;
 import com.example.Capstone_Inventory_Manager.model.Product;
 import com.example.Capstone_Inventory_Manager.model.ProductTypes;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -55,13 +56,45 @@ public class TerminalUtils {
     }
 
     public static void printProduct(Product p) {
+        System.out.println("\n<════════════════════════════════>");
         System.out.print(p);
+        System.out.println("<════════════════════════════════>");
+    }
+
+    public static void printProductTypes() {
+        System.out.println("\n<══ Product Types ══>");
+        for (int i = 0; i < ProductTypes.values().length; i++) {
+            System.out.printf("(%d). %s%n", i+1, ProductTypes.values()[i]);
+        }
+        System.out.println("<═══════════════════>");
     }
 
     // _______________ Input Functions ____________________
     public static String getUserString(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
+    }
+
+    public static int getUserInt(String prompt) {
+       while (true) {
+           try {
+               System.out.print(prompt);
+               return Integer.parseInt(scanner.nextLine());
+           } catch (Exception ex) {
+               System.out.println("Error, please input an valid integer!");
+           }
+       }
+    }
+
+    public static BigDecimal getUserBigDecimal(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return new BigDecimal(scanner.nextLine());
+            } catch (Exception ex) {
+                System.out.println("Error, please input an valid decimal number!");
+            }
+        }
     }
 
 }

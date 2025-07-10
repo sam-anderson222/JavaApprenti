@@ -39,7 +39,7 @@ public class CsvInventoryRepository implements InventoryRepository{
     }
 
     @Override
-    public Result<Void> updatePrice(String productIdOrName, BigDecimal newPrice) {
+    public Result<Void> updateProduct(String productIdOrName, Product newProduct) {
         return null;
     }
 
@@ -51,6 +51,11 @@ public class CsvInventoryRepository implements InventoryRepository{
     @Override
     public HashMap<String, Product> getStockTable() {
         return inventory;
+    }
+
+    @Override
+    public boolean containsProduct(String productID) {
+        return true;
     }
 
     private void load() {

@@ -17,12 +17,20 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
+    public Result<Void> addStock(String productID, Product product) {
+        return inventoryRepository.addStock(productID, product);
+    }
+
     public Result<Product> getProduct(String productIdOrName) {
         return inventoryRepository.getProduct(productIdOrName);
     }
 
     public HashMap<String, Product> getStockTable() {
         return inventoryRepository.getStockTable();
+    }
+
+    public boolean containsProduct(String productID) {
+        return inventoryRepository.containsProduct(productID);
     }
 
 }
