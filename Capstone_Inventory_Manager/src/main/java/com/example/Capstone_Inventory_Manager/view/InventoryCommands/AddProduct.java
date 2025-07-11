@@ -56,18 +56,18 @@ public class AddProduct {
         switch (productType) {
             case "1": // Perishable case
                 LocalDate expirationDate = TerminalUtils.getUserLocalDate("Enter expiration date in (yyyy-mm-dd) format: ");
-                result = is.addStock(productID, new PerishableProduct(productID, productName, productQuantity, productPrice, expirationDate));
+                result = is.addProduct(productID, new PerishableProduct(productID, productName, productQuantity, productPrice, expirationDate));
                 break;
             case "2": // Electronic case
                 String brand = TerminalUtils.getUserString("Enter company brand: ");
-                result = is.addStock(productID, new ElectronicProduct(productID, productName, productQuantity, productPrice, brand));
+                result = is.addProduct(productID, new ElectronicProduct(productID, productName, productQuantity, productPrice, brand));
                 break;
             default:
                 TerminalUtils.printMessage("Error, invalid product type!");
                 return;
         }
 
-        TerminalUtils.printMessage(result.getMessage());
+        TerminalUtils.printMessage(result.message());
 
     }
 }

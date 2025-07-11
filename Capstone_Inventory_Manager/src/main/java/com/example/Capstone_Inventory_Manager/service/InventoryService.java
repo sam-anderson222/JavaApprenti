@@ -17,11 +17,11 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public Result<Void> addStock(String productID, Product product) {
+    public Result<Void> addProduct(String productID, Product product) {
         return inventoryRepository.addProduct(productID, product);
     }
 
-    public Result<Void> removeStock(String productID, int quantityToRemove) {
+    public Result<Void> removeProduct(String productID, int quantityToRemove) {
         return inventoryRepository.removeProduct(productID, quantityToRemove);
     }
 

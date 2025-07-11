@@ -10,11 +10,17 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 public class CsvInventoryRepository implements InventoryRepository{
-
     private final HashMap<String, Product> inventory;
 
     public CsvInventoryRepository() {
         inventory = new HashMap<>();
+    }
+
+    // For manual creation for testing instead of using Spring.
+    public CsvInventoryRepository(String filePath) {
+        inventory = new HashMap<>();
+        this.filePath = filePath;
+        load();
     }
 
     @Value("${inventory.csv.filepath:data/inventory.csv}")
@@ -22,6 +28,7 @@ public class CsvInventoryRepository implements InventoryRepository{
 
     @PostConstruct
     public void init() {
+        System.out.println(filePath);
         load(); // Loads all data from file after Spring is done setting up.
     }
 
@@ -30,11 +37,9 @@ public class CsvInventoryRepository implements InventoryRepository{
     public Result<Void> addProduct(String productID, Product product) {
         if (containsProductID(productID)) {
             return new Result<>(false, String.format("Error, product with ID %s already exists.", productID), null);
-        }
-        else if (productID == null) {
+        } else if (productID == null) {
             return new Result<>(false, "Error, null product ID.", null);
-        }
-        else if (productID.isEmpty()) {
+        } else if (productID.isEmpty()) {
             return new Result<>(false, "Error, blank product ID.", null);
         } else if (!product.isValid()) {
             return new Result<>(false, "Error, invalid product received.", null);
@@ -47,14 +52,16 @@ public class CsvInventoryRepository implements InventoryRepository{
 
     @Override
     public Result<Void> removeProduct(String productID, int quantityToRemove) {
-        Product p = getProduct(productID).getData();
+        Product p = getProduct(productID).data();
 
-        if (p == null) { // If product isn't found
-            return new Result<>(false, String.format("Error, product with ID / name %s not found.", productID), null);
-        } else if (productID == null) {
-            return new Result<>(false, "Error, null product ID / name.", null);
-        } else if(productID.isEmpty()) {
-            return new Result<>(false, "Error, blank product ID / name.", null);
+        if (productID == null) {
+            return new Result<>(false, "Error, null product ID.", null);
+        } else if (productID.isEmpty()) {
+            return new Result<>(false, "Error, blank product ID.", null);
+        } else if (p == null) { // If product isn't found
+            return new Result<>(false, String.format("Error, product with ID %s not found.", productID), null);
+        } else if (quantityToRemove <= 0) {
+            return new Result<>(false, "Error, cannot remove non-positive quantity", null);
         }
 
         p.setQuantity(p.getQuantity() - quantityToRemove); // Reduce quantity
@@ -71,8 +78,20 @@ public class CsvInventoryRepository implements InventoryRepository{
     }
 
     @Override
-    public Result<Void> updateProduct(String productIdOrName, Product newProduct) {
-        return null;
+    public Result<Void> updateProduct(String productID, Product newProduct) {
+        if (productID == null) {
+            return new Result<>(false, "Error, null product ID.", null);
+        } else if (productID.isEmpty()) {
+            return new Result<>(false, "Error, blank product ID.", null);
+        } else if (!containsProductID(productID)) {
+            return new Result<>(false, String.format("Error, product with ID %s doesn't exist.", productID), null);
+        } else if (!newProduct.isValid()) {
+            return new Result<>(false, "Error, invalid updated product data received.", null);
+        }
+
+        inventory.replace(productID, newProduct);
+        save();
+        return new Result<>(true, "Item successfully updated.", null);
     }
 
     @Override
@@ -85,7 +104,7 @@ public class CsvInventoryRepository implements InventoryRepository{
         }
 
         // Return null result if product not found.
-        return new Result<Product>(false, String.format("%s not found! Please try again.", productIdOrName), null);
+        return new Result<Product>(false, String.format("'%s' not found! Please try again.", productIdOrName), null);
     }
 
     @Override
@@ -151,7 +170,9 @@ public class CsvInventoryRepository implements InventoryRepository{
     }
 
     private void save() {
-        try(PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+        File file = new File(filePath);
+
+        try(PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             for (Product product : inventory.values()) {
                 writer.printf("%s,%s,%d,%.2f,%s,%s%n",
                         product.getProductID(),

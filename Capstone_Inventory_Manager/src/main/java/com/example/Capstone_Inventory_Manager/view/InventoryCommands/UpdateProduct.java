@@ -26,12 +26,15 @@ public class UpdateProduct {
             return;
         }
 
-        Product originalProduct = is.getProduct(productID).getData();
+        Product originalProduct = is.getProduct(productID).data();
 
         if (originalProduct == null) {
             TerminalUtils.printMessage("Error, null product. Please try again.");
             return;
         }
+
+        // Reassign productID to ensure case is kept (ex: ID: p001 returns item with ID: P001, then p001 is assigned P001 so case doesn't change when updated.)
+        productID = originalProduct.getProductID();
 
         // Getting other fields
         String productName = TerminalUtils.getUserString("Enter product name (leave blank to keep original name): ");
@@ -65,11 +68,7 @@ public class UpdateProduct {
         Result<Void> result;
         switch (originalProduct.getProductType()) {
             case PERISHABLE: // Perishable case
-                LocalDate expirationDate = TerminalUtils.getUserLocalDate("Enter expiration date in (yyyy-mm-dd) format (enter 0000-00-00 to keep same): ");
-
-                if (expirationDate.isEqual(LocalDate.parse("0000-00-00"))) {
-                    expirationDate = LocalDate.parse(originalProduct.getExtraInfo());
-                }
+                LocalDate expirationDate = TerminalUtils.getUserLocalDate("Enter new expiration date in (yyyy-mm-dd) format: ");
 
                 result = is.updateProduct(productID, new PerishableProduct(productID, productName, productQuantity, productPrice, expirationDate));
                 break;
@@ -87,6 +86,6 @@ public class UpdateProduct {
                 return;
         }
 
-        TerminalUtils.printMessage(result.getMessage());
+        TerminalUtils.printMessage(result.message());
     }
 }

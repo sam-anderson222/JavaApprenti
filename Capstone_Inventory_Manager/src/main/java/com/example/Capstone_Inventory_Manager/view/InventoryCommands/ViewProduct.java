@@ -15,12 +15,12 @@ public class ViewProduct {
 
         // Print error message if product is not found.
         if (!productSearchResult.isSuccess()) {
-            TerminalUtils.printMessage(productSearchResult.getMessage());
+            TerminalUtils.printMessage(productSearchResult.message());
             return;
         }
 
         // Print product info.
-        TerminalUtils.printProduct(productSearchResult.getData());
+        TerminalUtils.printProduct(productSearchResult.data());
 
 
     }

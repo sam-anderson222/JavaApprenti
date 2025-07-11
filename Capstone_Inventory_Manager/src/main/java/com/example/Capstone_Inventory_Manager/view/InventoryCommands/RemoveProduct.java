@@ -27,8 +27,8 @@ public class RemoveProduct {
             return;
         }
 
-        Result<Void> result = is.removeStock(productID, quantity);
-        TerminalUtils.printMessage(result.getMessage());
+        Result<Void> result = is.removeProduct(productID, quantity);
+        TerminalUtils.printMessage(result.message());
 
     }
 }

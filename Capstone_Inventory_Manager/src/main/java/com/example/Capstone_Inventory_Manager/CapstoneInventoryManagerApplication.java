@@ -1,5 +1,7 @@
 package com.example.Capstone_Inventory_Manager;
 
+import com.example.Capstone_Inventory_Manager.repository.CsvInventoryRepository;
+import com.example.Capstone_Inventory_Manager.service.InventoryService;
 import com.example.Capstone_Inventory_Manager.view.Inventory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

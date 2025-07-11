@@ -1,10 +1,7 @@
 package com.example.Capstone_Inventory_Manager.view;
 
 import com.example.Capstone_Inventory_Manager.service.InventoryService;
-import com.example.Capstone_Inventory_Manager.view.InventoryCommands.AddProduct;
-import com.example.Capstone_Inventory_Manager.view.InventoryCommands.RemoveProduct;
-import com.example.Capstone_Inventory_Manager.view.InventoryCommands.ViewProduct;
-import com.example.Capstone_Inventory_Manager.view.InventoryCommands.ViewStockTable;
+import com.example.Capstone_Inventory_Manager.view.InventoryCommands.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,6 +28,7 @@ public class Inventory {
                     RemoveProduct.execute(inventoryService);
                     break;
                 case "3": // Update product
+                    UpdateProduct.execute(inventoryService);
                     break;
                 case "4": // Get and print single product
                     ViewProduct.execute(inventoryService);
