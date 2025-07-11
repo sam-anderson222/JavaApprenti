@@ -32,23 +32,60 @@ public class InMemoryInventoryRepository implements InventoryRepository{
 
 
     @Override
-    public Result<Void> addStock(String productID, Product product) {
-        if (containsProduct(productID)) {
+    public Result<Void> addProduct(String productID, Product product) {
+        if (containsProductID(productID)) {
             return new Result<>(false, String.format("Error, product with ID %s already exists.", productID), null);
+        }
+        else if (productID == null) {
+            return new Result<>(false, "Error, null product ID.", null);
+        }
+        else if (productID.isEmpty()) {
+            return new Result<>(false, "Error, blank product ID.", null);
+        } else if (!product.isValid()) {
+            return new Result<>(false, "Error, invalid product quantity / price / name received.", null);
         }
 
         inventory.put(productID, product);
-        return new Result<>(true, String.format("%s added", productID), null);
+        return new Result<>(true, String.format("%s added.", productID), null);
     }
 
     @Override
-    public Result<Void> removeStock(String productIdOrName, int quantityToRemove) {
-        return null;
+    public Result<Void> removeProduct(String productID, int quantityToRemove) {
+        Product p = getProduct(productID).getData();
+
+        if (p == null) { // If product isn't found
+            return new Result<>(false, String.format("Error, product with ID / name %s not found.", productID), null);
+        } else if (productID == null) {
+            return new Result<>(false, "Error, null product ID / name.", null);
+        } else if(productID.isEmpty()) {
+            return new Result<>(false, "Error, blank product ID / name.", null);
+        }
+
+        p.setQuantity(p.getQuantity() - quantityToRemove); // Reduce quantity
+
+        // If quantity is less than 0, then remove product from stock
+        if (p.getQuantity() <= 0) {
+            inventory.remove(p.getProductID());
+            return new Result<>(true, String.format("%s successfully removed.", p.getProductName()), null);
+        } else {
+            return new Result<>(true, String.format("%d of %s removed.", quantityToRemove, p.getProductName()), null);
+        }
     }
 
     @Override
-    public Result<Void> updateProduct(String productIdOrName, Product newProduct) {
-        return null;
+    public Result<Void> updateProduct(String productID, Product newProduct) {
+        if (containsProductID(productID)) {
+            return new Result<>(false, String.format("Error, product with ID %s already exists.", productID), null);
+        } else if (productID == null) {
+            return new Result<>(false, "Error, null product ID.", null);
+        } else if (productID.isEmpty()) {
+            return new Result<>(false, "Error, blank product ID.", null);
+        } else if (!newProduct.isValid()) {
+            return new Result<>(false, "Error, invalid updated product data received.", null);
+        }
+
+        inventory.replace(productID, newProduct);
+        return new Result<>(true, "Item successfully updated.", null);
     }
 
     @Override
@@ -70,7 +107,7 @@ public class InMemoryInventoryRepository implements InventoryRepository{
     }
 
     @Override
-    public boolean containsProduct(String productID) {
+    public boolean containsProductID(String productID) {
         for (String id : inventory.keySet()) {
             // If key already exists, return falling result.
             if (id.equalsIgnoreCase(productID))

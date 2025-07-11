@@ -2,17 +2,21 @@ package com.example.Capstone_Inventory_Manager;
 
 import com.example.Capstone_Inventory_Manager.model.PerishableProduct;
 import com.example.Capstone_Inventory_Manager.model.Product;
+import com.example.Capstone_Inventory_Manager.repository.CsvInventoryRepository;
 import com.example.Capstone_Inventory_Manager.repository.InMemoryInventoryRepository;
 import com.example.Capstone_Inventory_Manager.service.InventoryService;
 import org.junit.jupiter.api.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 class InventoryRepositoryTest {
     private InventoryService is;
+    String testFilePath = "data/test/inventory-test.csv";
 
     @BeforeEach
     public void setUp() {
@@ -47,6 +51,12 @@ class InventoryRepositoryTest {
     @Test
     void addingProductWithIDThatAlreadyExists() {
         boolean success = is.addStock("P001", null).isSuccess();
+        assertFalse(success);
+    }
+
+    @Test
+    void addingProductWithBlankIDReturnsError() {
+        boolean success = is.addStock("", null).isSuccess();
         assertFalse(success);
     }
 

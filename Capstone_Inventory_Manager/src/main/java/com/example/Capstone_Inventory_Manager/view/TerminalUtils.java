@@ -4,6 +4,7 @@ import com.example.Capstone_Inventory_Manager.model.Product;
 import com.example.Capstone_Inventory_Manager.model.ProductTypes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -93,6 +94,17 @@ public class TerminalUtils {
                 return new BigDecimal(scanner.nextLine());
             } catch (Exception ex) {
                 System.out.println("Error, please input an valid decimal number!");
+            }
+        }
+    }
+
+    public static LocalDate getUserLocalDate(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return LocalDate.parse(scanner.nextLine());
+            } catch (Exception ex) {
+                System.out.println("Error, please input an valid date in (yyyy-mm-dd) format!");
             }
         }
     }

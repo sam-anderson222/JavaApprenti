@@ -18,7 +18,15 @@ public class InventoryService {
     }
 
     public Result<Void> addStock(String productID, Product product) {
-        return inventoryRepository.addStock(productID, product);
+        return inventoryRepository.addProduct(productID, product);
+    }
+
+    public Result<Void> removeStock(String productID, int quantityToRemove) {
+        return inventoryRepository.removeProduct(productID, quantityToRemove);
+    }
+
+    public Result<Void> updateProduct(String productID, Product newProduct) {
+        return inventoryRepository.updateProduct(productID, newProduct);
     }
 
     public Result<Product> getProduct(String productIdOrName) {
@@ -30,7 +38,7 @@ public class InventoryService {
     }
 
     public boolean containsProduct(String productID) {
-        return inventoryRepository.containsProduct(productID);
+        return inventoryRepository.containsProductID(productID);
     }
 
 }

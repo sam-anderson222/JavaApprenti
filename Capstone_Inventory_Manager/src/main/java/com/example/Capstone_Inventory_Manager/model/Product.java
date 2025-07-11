@@ -44,5 +44,10 @@ public abstract class Product {
         return productType;
     }
 
+    // Checks if price and quantity are non-negative and that name / id isn't blank
+    public boolean isValid() {
+        return (quantity > 0 && price.compareTo(BigDecimal.ZERO) > 0 && !productName.isEmpty() && !productID.isEmpty());
+    }
+
     public abstract String getExtraInfo();
 }
