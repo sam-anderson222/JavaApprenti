@@ -174,13 +174,7 @@ public class CsvInventoryRepository implements InventoryRepository{
 
         try(PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             for (Product product : inventory.values()) {
-                writer.printf("%s,%s,%d,%.2f,%s,%s%n",
-                        product.getProductID(),
-                        product.getProductName(),
-                        product.getQuantity(),
-                        product.getPrice(),
-                        product.getProductType(),
-                        product.getExtraInfo());
+                writer.print(product.toCsvLine());
             }
         } catch (IOException e) {
             throw new RuntimeException("Error writing to file: " + filePath, e);

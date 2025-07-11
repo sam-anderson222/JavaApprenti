@@ -49,5 +49,7 @@ public abstract class Product {
         return (quantity > 0 && price.compareTo(BigDecimal.ZERO) > 0 && !productName.isEmpty() && !productID.isEmpty());
     }
 
-    public abstract String getExtraInfo();
+    public abstract String toProductTableRow();
+
+    public abstract String toCsvLine();
 }

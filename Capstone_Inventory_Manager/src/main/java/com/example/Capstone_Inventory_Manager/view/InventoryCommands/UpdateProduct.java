@@ -73,11 +73,7 @@ public class UpdateProduct {
                 result = is.updateProduct(productID, new PerishableProduct(productID, productName, productQuantity, productPrice, expirationDate));
                 break;
             case ELECTRONIC: // Electronic case
-                String brand = TerminalUtils.getUserString("Enter company brand (leave blank to keep original brand): ");
-
-                if (brand.isEmpty()) {
-                    brand = originalProduct.getExtraInfo();
-                }
+                String brand = TerminalUtils.getUserString("Enter company brand: ");
 
                 result = is.updateProduct(productID, new ElectronicProduct(productID, productName, productQuantity, productPrice, brand));
                 break;

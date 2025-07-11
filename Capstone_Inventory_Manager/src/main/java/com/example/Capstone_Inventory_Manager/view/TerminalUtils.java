@@ -41,17 +41,7 @@ public class TerminalUtils {
         System.out.printf("%6s | %14s | %8s | %10s | %16s | %10s | %12s%n", "ID", "Name", "Quantity", "Price", "Type", "Expiration", "Brand");
         System.out.println("═════════════════════════════════════════════════════════════════════════════════════════════════");
         for (Product p : productTable.values()) {
-            switch (p.getProductType()) {
-                case PERISHABLE -> System.out.printf("%6s | %14s | %8d | $%9.2f | %16s | %10s | %12s%n",
-                        p.getProductID(), p.getProductName(), p.getQuantity(), p.getPrice(),
-                        "PERISHABLE", p.getExtraInfo(), "");
-                case ELECTRONIC -> System.out.printf("%6s | %14s | %8d | $%9.2f | %16s | %10s | %12s%n",
-                        p.getProductID(), p.getProductName(), p.getQuantity(), p.getPrice(),
-                        "ELECTRONIC", "", p.getExtraInfo());
-                default -> System.out.printf("%6s | %14s | %8d | $%9.2f | %16s | %10s | %12s%n",
-                        p.getProductID(), p.getProductName(), p.getQuantity(), p.getPrice(),
-                        "GENERIC", "", "");
-            }
+            System.out.println(p.toProductTableRow());
         }
         System.out.println("═════════════════════════════════════════════════════════════════════════════════════════════════\n");
     }

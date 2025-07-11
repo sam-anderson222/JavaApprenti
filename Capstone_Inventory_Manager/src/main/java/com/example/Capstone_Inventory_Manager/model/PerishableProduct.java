@@ -13,8 +13,17 @@ public class PerishableProduct extends Product {
     }
 
     @Override
-    public String getExtraInfo() {
-        return expirationDate.toString();
+    public String toProductTableRow() {
+        return String.format("%6s | %14s | %8d | $%9.2f | %16s | %10s | %12s",
+                productID, productName, quantity, price,
+                "PERISHABLE", expirationDate, "");
+    }
+
+    @Override
+    public String toCsvLine() {
+        return String.format("%s,%s,%d,%.2f,%s,%s%n",
+                productID, productName, quantity, price,
+                "PERISHABLE", expirationDate);
     }
 
     @Override

@@ -12,8 +12,17 @@ public class ElectronicProduct extends Product {
     }
 
     @Override
-    public String getExtraInfo() {
-        return brand;
+    public String toProductTableRow() {
+        return String.format("%6s | %14s | %8d | $%9.2f | %16s | %10s | %12s",
+                productID, productName, quantity, price,
+                "ELECTRONIC", "", brand);
+    }
+
+    @Override
+    public String toCsvLine() {
+        return String.format("%s,%s,%d,%.2f,%s,%s%n",
+                productID, productName, quantity, price,
+                "ELECTRONIC", brand);
     }
 
     @Override
