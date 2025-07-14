@@ -33,7 +33,7 @@ public class InMemoryInventoryRepository implements InventoryRepository{
 
     @Override
     public Result<Void> addProduct(String productID, Product product) {
-        if (containsProductID(productID)) {
+        if (containsProductID(productID)) { // Checking for reasons why method call could be invalid.
             return new Result<>(false, String.format("Error, product with ID %s already exists.", productID), null);
         } else if (productID == null) {
             return new Result<>(false, "Error, null product ID.", null);
@@ -49,7 +49,7 @@ public class InMemoryInventoryRepository implements InventoryRepository{
 
     @Override
     public Result<Void> removeProduct(String productID, int quantityToRemove) {
-        Product p = getProduct(productID).data();
+        Product p = getProduct(productID).data(); // We get this product so we can ensure it exists.
 
         if (productID == null) {
             return new Result<>(false, "Error, null product ID.", null);

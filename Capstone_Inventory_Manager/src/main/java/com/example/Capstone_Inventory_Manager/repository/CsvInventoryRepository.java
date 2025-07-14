@@ -35,7 +35,7 @@ public class CsvInventoryRepository implements InventoryRepository{
 
     @Override
     public Result<Void> addProduct(String productID, Product product) {
-        if (containsProductID(productID)) {
+        if (containsProductID(productID)) { // Checking for reasons why method call could be invalid.
             return new Result<>(false, String.format("Error, product with ID %s already exists.", productID), null);
         } else if (productID == null) {
             return new Result<>(false, "Error, null product ID.", null);
@@ -64,7 +64,7 @@ public class CsvInventoryRepository implements InventoryRepository{
             return new Result<>(false, "Error, cannot remove non-positive quantity", null);
         }
 
-        p.setQuantity(p.getQuantity() - quantityToRemove); // Reduce quantity
+        p.setQuantity(p.getQuantity() - quantityToRemove);
 
         // If quantity is less than 0, then remove product from stock
         if (p.getQuantity() <= 0) {
@@ -112,6 +112,7 @@ public class CsvInventoryRepository implements InventoryRepository{
         return inventory;
     }
 
+    // Checks for productID disregarding case (Ex: p001 and P001 both return the same object)
     @Override
     public boolean containsProductID(String productID) {
         for (String id : inventory.keySet()) {
