@@ -73,7 +73,7 @@ public class CsvInventoryRepository implements InventoryRepository{
             return new Result<>(true, String.format("%s successfully removed.", p.getProductName()), null);
         } else {
             save();
-            return new Result<>(true, String.format("%d of %s removed.", quantityToRemove, p.getProductName()), null);
+            return new Result<>(true, String.format("%d %s removed.", quantityToRemove, p.getProductName()), null);
         }
     }
 

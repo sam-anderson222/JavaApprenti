@@ -142,7 +142,7 @@ class InventoryRepositoryTest {
 
     @Test
     void removeProduct_RemoveSomeOfProduct_ReturnsTrueResult() {
-        Result<Void> expected = new Result<>(true, "2 of Apple removed.", null);
+        Result<Void> expected = new Result<>(true, "2 Apple removed.", null);
         Result<Void> actual = is.removeProduct("P001", 2);
 
         assertEquals(expected.toString(), actual.toString());
@@ -185,6 +185,15 @@ class InventoryRepositoryTest {
         Result<Void> expected = new Result<>(false, "Error, invalid updated product data received.", null);
         // Invalid product as has negative quantity / price
         Result<Void> actual = is.updateProduct("P001", new PerishableProduct("P001", "Apple", -10, new BigDecimal("-1.99"), LocalDate.parse("2025-05-05")));
+
+        assertEquals(expected.toString(), actual.toString());
+    }
+
+    @Test
+    void updateProduct_ValidProduct_ReturnsTrue() {
+        Result<Void> expected = new Result<>(true, "Item successfully updated.", null);
+        // Invalid product as has negative quantity / price
+        Result<Void> actual = is.updateProduct("P001", new PerishableProduct("P001", "Apple", 10, new BigDecimal("1.99"), LocalDate.parse("2025-05-05")));
 
         assertEquals(expected.toString(), actual.toString());
     }

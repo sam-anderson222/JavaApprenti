@@ -23,7 +23,7 @@ public class InMemoryInventoryRepository implements InventoryRepository{
 
         // Sample Electronics
         inventory.put("E001", new ElectronicProduct("E001", "TV", 8, new BigDecimal("249.99"), "LG"));
-        inventory.put("E002", new ElectronicProduct("E002", "PS5", 10, new BigDecimal("499.99"), "Sony"));
+        inventory.put("E002", new ElectronicProduct("E002", "Headphones", 10, new BigDecimal("499.99"), "Sony"));
         inventory.put("E003", new ElectronicProduct("E003", "Laptop", 13, new BigDecimal("599.99"), "Microsoft"));
 
     }
@@ -68,7 +68,7 @@ public class InMemoryInventoryRepository implements InventoryRepository{
             inventory.remove(p.getProductID());
             return new Result<>(true, String.format("%s successfully removed.", p.getProductName()), null);
         } else {
-            return new Result<>(true, String.format("%d of %s removed.", quantityToRemove, p.getProductName()), null);
+            return new Result<>(true, String.format("%d %s removed.", quantityToRemove, p.getProductName()), null);
         }
     }
 
