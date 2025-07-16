@@ -1,7 +1,7 @@
 package com.example.Capstone_Inventory_Manager.view;
 
 import com.example.Capstone_Inventory_Manager.service.InventoryService;
-import com.example.Capstone_Inventory_Manager.view.InventoryCommands.*;
+import com.example.Capstone_Inventory_Manager.view.inventorycommands.*;
 import org.springframework.stereotype.Component;
 
 @Component

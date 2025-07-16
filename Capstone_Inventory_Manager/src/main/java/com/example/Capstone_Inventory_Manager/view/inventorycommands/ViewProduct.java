@@ -1,4 +1,4 @@
-package com.example.Capstone_Inventory_Manager.view.InventoryCommands;
+package com.example.Capstone_Inventory_Manager.view.inventorycommands;
 
 import com.example.Capstone_Inventory_Manager.model.Product;
 import com.example.Capstone_Inventory_Manager.model.Result;

@@ -1,4 +1,4 @@
-package com.example.Capstone_Inventory_Manager.view.InventoryCommands;
+package com.example.Capstone_Inventory_Manager.view.inventorycommands;
 
 import com.example.Capstone_Inventory_Manager.model.ElectronicProduct;
 import com.example.Capstone_Inventory_Manager.model.PerishableProduct;
@@ -6,7 +6,6 @@ import com.example.Capstone_Inventory_Manager.model.Result;
 import com.example.Capstone_Inventory_Manager.service.InventoryService;
 import com.example.Capstone_Inventory_Manager.view.TerminalUtils;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -18,7 +17,7 @@ public class AddProduct {
         String productID = TerminalUtils.getUserString("Enter product ID: ");
 
         // If product with ID already in stock table, then boot user back to main menu.
-        if (is.containsProduct(productID)) {
+        if (is.containsProductID(productID)) {
             TerminalUtils.printMessage(String.format("Error, product with ID %s already exists! Please try again.", productID));
             return;
         } else if (productID.isEmpty()) {

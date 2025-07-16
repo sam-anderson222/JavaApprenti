@@ -37,7 +37,7 @@ public class InventoryService {
         return inventoryRepository.getStockTable();
     }
 
-    public boolean containsProduct(String productID) {
+    public boolean containsProductID(String productID) {
         return inventoryRepository.containsProductID(productID);
     }
 

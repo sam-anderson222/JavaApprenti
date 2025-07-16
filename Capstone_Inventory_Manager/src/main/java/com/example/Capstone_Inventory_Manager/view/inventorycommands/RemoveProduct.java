@@ -1,4 +1,4 @@
-package com.example.Capstone_Inventory_Manager.view.InventoryCommands;
+package com.example.Capstone_Inventory_Manager.view.inventorycommands;
 
 import com.example.Capstone_Inventory_Manager.model.Result;
 import com.example.Capstone_Inventory_Manager.service.InventoryService;
@@ -12,7 +12,7 @@ public class RemoveProduct {
         // Get product to remove and quantity to remove.
         String productID = TerminalUtils.getUserString("Enter productID you wish to remove quantity for: ");
 
-        if (!is.containsProduct(productID)) {
+        if (!is.containsProductID(productID)) {
             TerminalUtils.printMessage(String.format("Error, product with ID %s could not be found! Please try again.", productID));
             return;
         } else if (productID.isEmpty()) {

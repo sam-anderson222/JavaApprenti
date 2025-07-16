@@ -1,4 +1,4 @@
-package com.example.Capstone_Inventory_Manager.view.InventoryCommands;
+package com.example.Capstone_Inventory_Manager.view.inventorycommands;
 
 import com.example.Capstone_Inventory_Manager.model.ElectronicProduct;
 import com.example.Capstone_Inventory_Manager.model.PerishableProduct;
@@ -18,7 +18,7 @@ public class UpdateProduct {
         // Get product user is trying to update.
         String productID = TerminalUtils.getUserString("Enter ID of product you wish to edit: ");
 
-        if (!is.containsProduct(productID)) {
+        if (!is.containsProductID(productID)) {
             TerminalUtils.printMessage(String.format("Error, product with ID %s could not be found! Please try again.", productID));
             return;
         } else if (productID.isEmpty()) {
