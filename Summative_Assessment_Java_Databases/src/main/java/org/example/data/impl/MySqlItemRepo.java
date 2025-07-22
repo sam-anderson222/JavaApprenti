@@ -5,7 +5,9 @@ import org.example.data.exceptions.InternalErrorException;
 import org.example.data.exceptions.RecordNotFoundException;
 import org.example.model.Item;
 import org.example.model.ItemCategory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -14,6 +16,9 @@ import java.util.List;
 @Repository
 @Primary
 public class MySqlItemRepo implements ItemRepo {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Override
     public Item getItemById(int id) throws RecordNotFoundException, InternalErrorException {
         return null;

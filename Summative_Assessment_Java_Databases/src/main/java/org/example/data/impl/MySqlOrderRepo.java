@@ -4,7 +4,9 @@ import org.example.data.OrderRepo;
 import org.example.data.exceptions.InternalErrorException;
 import org.example.data.exceptions.RecordNotFoundException;
 import org.example.model.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Repository
 @Primary
 public class MySqlOrderRepo implements OrderRepo {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Override
     public Order getOrderById(int id) throws RecordNotFoundException, InternalErrorException {
         return null;

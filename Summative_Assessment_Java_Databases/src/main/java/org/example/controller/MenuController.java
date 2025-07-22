@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.data.TaxRepo;
 import org.example.data.exceptions.InternalErrorException;
 import org.example.data.exceptions.RecordNotFoundException;
 import org.example.model.*;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -35,6 +37,9 @@ public class MenuController {
     private BistroService svc;
 
     @Autowired
+    private TaxRepo taxes;
+
+    @Autowired
     public MenuController(IO io, BistroService svc) {
         this.io = io;
         this.svc = svc;
@@ -44,6 +49,11 @@ public class MenuController {
         boolean running = true;
 
         while (running) {
+            try {
+               System.out.println();
+            } catch (Exception ex) {
+                continue;
+            }
             int choice = getMenuChoice();
             switch (choice) {
                 case CHOICE_DISPLAY_ORDERS:
