@@ -50,7 +50,12 @@ public class MenuController {
 
         while (running) {
             try {
-               System.out.println();
+                List<Item> c = svc.getAllItems();
+
+                for (Item i : c) {
+                    System.out.println(i);
+                    System.out.println(i.getItemCategory());
+                }
             } catch (Exception ex) {
                 continue;
             }

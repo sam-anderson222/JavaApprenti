@@ -3,6 +3,9 @@ package org.example.data.impl;
 import org.example.data.ItemRepo;
 import org.example.data.exceptions.InternalErrorException;
 import org.example.data.exceptions.RecordNotFoundException;
+import org.example.data.mappers.ItemCategoryMapper;
+import org.example.data.mappers.ItemMapper;
+import org.example.data.mappers.PaymentTypeMapper;
 import org.example.model.Item;
 import org.example.model.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,16 @@ public class MySqlItemRepo implements ItemRepo {
 
     @Override
     public List<Item> getAllAvailableItems(LocalDate today) throws InternalErrorException {
-        return List.of();
+        String sql = "SELECT ItemID, item.ItemCategoryID, ItemName, ItemDescription, StartDate, EndDate, UnitPrice, ItemCategoryName FROM item \n" +
+                "INNER JOIN itemcategory ic ON item.ItemCategoryID = ic.ItemCategoryID\n" +
+                "WHERE (? BETWEEN StartDate AND EndDate) OR\n" +
+                "(EndDate IS NULL AND ? >= StartDate)";
+
+        try {
+            return jdbcTemplate.query(sql, ItemMapper.itemRowMapper(), today, today);
+        } catch (Exception ex) {
+            throw new InternalErrorException();
+        }
     }
 
     @Override
@@ -36,6 +48,12 @@ public class MySqlItemRepo implements ItemRepo {
 
     @Override
     public List<ItemCategory> getAllItemCategories() throws InternalErrorException {
-        return List.of();
+        String sql = "SELECT * FROM itemcategory";
+
+        try {
+            return jdbcTemplate.query(sql, ItemCategoryMapper.itemCategoryRowMapper());
+        } catch (Exception ex) {
+            throw new InternalErrorException();
+        }
     }
 }
