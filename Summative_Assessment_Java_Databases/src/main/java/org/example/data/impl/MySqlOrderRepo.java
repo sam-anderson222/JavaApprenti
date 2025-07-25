@@ -179,58 +179,52 @@ public class MySqlOrderRepo implements OrderRepo {
             }, keyHolder);
 
             order.setOrderID(keyHolder.getKey().intValue());
-            setOrderIdsForForeignOrderFields(order); // Gives the OrderItems and Payments a part of Order the orderID.
         } catch (Exception ex) {
             throw new InternalErrorException();
         }
 
         // Second, batch insert the orderItem objects
-        jdbcTemplate.batchUpdate(
-                "INSERT INTO orderitem (OrderID, ItemID, Quantity, Price) VALUES (?, ?, ?, ?)",
-                new BatchPreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        OrderItem oi = order.getItems().get(i);
-                        ps.setInt(1, oi.getOrderID());
-                        ps.setInt(2, oi.getItemID());
-                        ps.setInt(3, oi.getQuantity());
-                        ps.setBigDecimal(4, oi.getPrice());
-
-                        // The oi's orderItemID doesn't need to be set, as it will be gotten when the object is reloaded via the DB.
-                    }
-
-                    @Override
-                    public int getBatchSize() {
-                        return order.getItems().size();
-                    }
-                }
-        );
+        insertOrderItems(order);
 
         // Last, batch insert the payment objects.
-        jdbcTemplate.batchUpdate(
-                "INSERT INTO payment (PaymentTypeID, OrderID, Amount) VALUES (?, ?, ?)",
-                new BatchPreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        Payment p = order.getPayments().get(i);
-                        ps.setInt(1, p.getPaymentTypeID());
-                        ps.setInt(2, p.getOrderID());
-                        ps.setBigDecimal(3, p.getAmount());
-                    }
+        insertPayments(order);
 
-                    @Override
-                    public int getBatchSize() {
-                        return order.getPayments().size();
-                    }
-                }
-        );
 
         return order;
     }
 
     @Override
     public void updateOrder(Order order) throws InternalErrorException {
+        try {
+            Boolean isSuccess = jdbcTemplate.execute("{CALL update_order_drop_orderitems_payments(?, ?, ?, ?, ?, ?, ?, ?)}",
+                    (CallableStatementCallback<Boolean>) cs -> {
+                        cs.setInt(1, order.getOrderID());
+                        cs.setInt(2, order.getServerID());
+                        cs.setTimestamp(3, Timestamp.valueOf(order.getOrderDate()));
+                        cs.setBigDecimal(4, order.getSubTotal());
+                        cs.setBigDecimal(5, order.getTax());
+                        cs.setBigDecimal(6, order.getTip());
+                        cs.setBigDecimal(7, order.getTotal());
+                        cs.registerOutParameter(8, Types.INTEGER);
+                        cs.execute();
+                        int rowsAffected = cs.getInt(8);
 
+                        return (rowsAffected == 1); // Checks to see
+                    });
+
+            if (Boolean.FALSE.equals(isSuccess)) { // Throws if user tried to update that doesn't exist.
+                throw new InternalErrorException();
+            } else {
+                // Insert the new orderItems and payments as the old ones were deleted.
+                insertOrderItems(order);
+                insertPayments(order);
+
+            }
+
+
+        } catch (Exception ex) {
+            throw new InternalErrorException();
+        }
     }
 
     @Override
@@ -248,14 +242,47 @@ public class MySqlOrderRepo implements OrderRepo {
         }
     }
 
-    // Ensure that orderItems and Payments get the orderID before they are saved to the database.
-    private void setOrderIdsForForeignOrderFields(Order order) {
-        for (OrderItem oi : order.getItems()) {
-            oi.setOrderID(order.getOrderID());
-        }
 
-        for (Payment p : order.getPayments()) {
-            p.setOrderID(order.getOrderID());
-        }
+    private void insertOrderItems(Order order) {
+        jdbcTemplate.batchUpdate(
+                "INSERT INTO orderitem (OrderID, ItemID, Quantity, Price) VALUES (?, ?, ?, ?)",
+                new BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        OrderItem oi = order.getItems().get(i);
+                        ps.setInt(1, order.getOrderID());
+                        ps.setInt(2, oi.getItemID());
+                        ps.setInt(3, oi.getQuantity());
+                        ps.setBigDecimal(4, oi.getPrice());
+
+                        // The oi's orderItemID doesn't need to be set, as it will be gotten when the object is reloaded via the DB.
+                    }
+
+                    @Override
+                    public int getBatchSize() {
+                        return order.getItems().size();
+                    }
+                }
+        );
+    }
+
+    private void insertPayments(Order order) {
+        jdbcTemplate.batchUpdate(
+                "INSERT INTO payment (PaymentTypeID, OrderID, Amount) VALUES (?, ?, ?)",
+                new BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        Payment p = order.getPayments().get(i);
+                        ps.setInt(1, p.getPaymentTypeID());
+                        ps.setInt(2, order.getOrderID());
+                        ps.setBigDecimal(3, p.getAmount());
+                    }
+
+                    @Override
+                    public int getBatchSize() {
+                        return order.getPayments().size();
+                    }
+                }
+        );
     }
 }

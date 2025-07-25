@@ -271,7 +271,7 @@ public class MenuController {
 
         int choice = io.getInt("Select an item");
         choice--;
-        if (choice < 0 || choice >= order.getItems().size()) {
+        if (choice < 0 || choice >= order.getPayments().size()) {
             io.displayMessage("Action canceled.");
             return;
         }
@@ -281,7 +281,7 @@ public class MenuController {
         BigDecimal newAmount = io.getMoney("Enter new amount");
         if (newAmount.doubleValue() <= 0) {
             io.displayMessage("Deleted payment from order");
-            order.getItems().remove(p);
+            order.getPayments().remove(p);
         } else {
             io.displayMessage("Payment updated");
             order.getPayments().get(choice).setAmount(newAmount);

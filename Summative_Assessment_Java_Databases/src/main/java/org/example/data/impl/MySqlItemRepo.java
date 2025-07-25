@@ -31,19 +31,27 @@ public class MySqlItemRepo implements ItemRepo {
     @Override
     public Item getItemById(int id) throws RecordNotFoundException, InternalErrorException {
         try {
-            return jdbcTemplate.execute("{CALL get_item_with_id(?)}",
+            Item item = jdbcTemplate.execute("{CALL get_item_with_id(?)}",
                     (CallableStatementCallback<Item>) cs -> {
                         cs.setInt(1, id);
                         ResultSet rs = cs.executeQuery();
 
-                        Item item = null;
+                        Item result = null;
                         if (rs.next()) {
-                            item = ItemMapper.itemRowMapper().mapRow(rs, 1);
-                            item.setItemCategory(ItemCategoryMapper.itemCategoryRowMapper().mapRow(rs, 1));
+                            result = ItemMapper.itemRowMapper().mapRow(rs, 1);
+                            result.setItemCategory(ItemCategoryMapper.itemCategoryRowMapper().mapRow(rs, 1));
                         }
 
-                        return item;
+                        return result;
                     } );
+
+            // Ensure item was found from DB.
+            if (item == null) {
+                throw new EmptyResultDataAccessException(1); // Expected 1 item, but got zero.
+            }
+
+            return item;
+
         } catch (EmptyResultDataAccessException ex) {
             throw new RecordNotFoundException();
         } catch (Exception ex) {
@@ -78,23 +86,29 @@ public class MySqlItemRepo implements ItemRepo {
     @Override
     public List<Item> getItemsByCategory(LocalDate today, int itemCategoryID) throws InternalErrorException {
         try {
-            return jdbcTemplate.execute("{CALL get_all_available_item_from_category(?, ?)}",
+            List<Item> items = jdbcTemplate.execute("{CALL get_all_available_item_from_category(?, ?)}",
                     (CallableStatementCallback<List<Item>>) cs -> {
                         cs.setDate(1, Date.valueOf(today));
                         cs.setInt(2, itemCategoryID);
                         ResultSet rs = cs.executeQuery();
-                        List<Item> items = new ArrayList<>();
+                        List<Item> result = new ArrayList<>();
 
 
                         while (rs.next()) {
                             Item item = ItemMapper.itemRowMapper().mapRow(rs, 1);
                             item.setItemCategory(ItemCategoryMapper.itemCategoryRowMapper().mapRow(rs, 1));
 
-                            items.add(item);
+                            result.add(item);
                         }
 
-                        return items;
+                        return result;
                     } );
+
+            if (items.isEmpty()) {
+                throw new InternalErrorException();
+            }
+
+            return items;
         } catch (Exception ex) {
             throw new InternalErrorException();
         }
