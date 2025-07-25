@@ -1,9 +1,11 @@
 package org.example.service;
 
 import org.example.data.OrderRepo;
+import org.example.data.PaymentTypeRepo;
 import org.example.data.exceptions.InternalErrorException;
 import org.example.data.exceptions.RecordNotFoundException;
 import org.example.model.Order;
+import org.example.model.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class BistroServiceTest {
+class PaymentTypeRepoTest {
     @Autowired
-    private OrderRepo orderRepo;
-
-    @Autowired
-    private BistroService svc;
+    private PaymentTypeRepo paymentTypeRepo;
 
     @Autowired
     private JdbcTemplate jdbcTemplate; // Used to access and reset the sql database.
@@ -35,11 +34,9 @@ class BistroServiceTest {
     }
 
     @Test
-    void testCalculateOrderTotals() throws RecordNotFoundException, InternalErrorException {
-        Order expected = orderRepo.getOrderById(1);
-        Order actual = orderRepo.getOrderById(1);
+    void getAll_getsAllPaymentTypes() throws InternalErrorException {
+        List<PaymentType> pt = paymentTypeRepo.getAll();
 
-        svc.calculateOrderTotals(actual);
-        assertEquals(expected, actual);
+        assertEquals(5, pt.size());
     }
 }

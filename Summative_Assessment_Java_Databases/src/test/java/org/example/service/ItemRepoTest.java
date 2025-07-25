@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.data.ItemRepo;
 import org.example.data.OrderRepo;
 import org.example.data.exceptions.InternalErrorException;
 import org.example.data.exceptions.RecordNotFoundException;
@@ -15,12 +16,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class BistroServiceTest {
+class ItemRepoTest {
     @Autowired
-    private OrderRepo orderRepo;
-
-    @Autowired
-    private BistroService svc;
+    private ItemRepo itemRepo;
 
     @Autowired
     private JdbcTemplate jdbcTemplate; // Used to access and reset the sql database.
@@ -34,12 +32,5 @@ class BistroServiceTest {
         }
     }
 
-    @Test
-    void testCalculateOrderTotals() throws RecordNotFoundException, InternalErrorException {
-        Order expected = orderRepo.getOrderById(1);
-        Order actual = orderRepo.getOrderById(1);
 
-        svc.calculateOrderTotals(actual);
-        assertEquals(expected, actual);
-    }
 }

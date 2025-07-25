@@ -50,13 +50,28 @@ public class MenuController {
 
         while (running) {
             try {
-                List<Item> c = svc.getAllItems();
+//                Order order = svc.getOrder(1);
+//
+//                svc.addOrder(order);
+////                List<Order> orders = svc.getAllOrders();
+////
+////                for (Order o : orders) {
+////                    System.out.println(o);
+////                }
+////
+////
+////
+////                List<Item> items = svc.getAllItemsByCategory(1);
+////
+////                for (Item i : items) {
+////                    System.out.println(i);
+////                }
+////
+//                order = svc.getOrder(order.getOrderID());
+//                System.out.println(order);
 
-                for (Item i : c) {
-                    System.out.println(i);
-                    System.out.println(i.getItemCategory());
-                }
             } catch (Exception ex) {
+                System.out.println(ex.getMessage());
                 continue;
             }
             int choice = getMenuChoice();

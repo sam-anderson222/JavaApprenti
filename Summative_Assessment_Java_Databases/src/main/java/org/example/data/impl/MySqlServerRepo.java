@@ -23,7 +23,7 @@ public class MySqlServerRepo implements ServerRepo {
 
     @Override
     public Server getServerById(int id) throws InternalErrorException, RecordNotFoundException {
-        String sql = "SELECT * FROM server WHERE ServerID = ?;";
+        String sql = "SELECT * FROM server WHERE ServerID = ?";
 
         try {
             return jdbcTemplate.queryForObject(sql, ServerMapper.serverRowMapper(), id);

@@ -101,6 +101,7 @@ public class Item {
                 ", StartDate=" + startDate +
                 ", EndDate=" + endDate +
                 ", UnitPrice=" + unitPrice +
+                ", ItemCategory=" + itemCategory +
                 '}';
     }
 }

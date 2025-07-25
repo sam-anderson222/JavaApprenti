@@ -20,7 +20,6 @@ public class ItemMapper {
             item.setEndDate(rs.getObject("EndDate", LocalDate.class));
             item.setUnitPrice(rs.getBigDecimal("UnitPrice"));
 
-            item.setItemCategory(new ItemCategory(item.getItemCategoryID(), rs.getString("ItemCategoryName")));
 
             return item;
         };

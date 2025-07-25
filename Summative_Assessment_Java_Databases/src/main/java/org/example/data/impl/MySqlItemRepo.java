@@ -6,14 +6,20 @@ import org.example.data.exceptions.RecordNotFoundException;
 import org.example.data.mappers.ItemCategoryMapper;
 import org.example.data.mappers.ItemMapper;
 import org.example.data.mappers.PaymentTypeMapper;
+import org.example.data.mappers.ServerMapper;
 import org.example.model.Item;
 import org.example.model.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -24,18 +30,46 @@ public class MySqlItemRepo implements ItemRepo {
 
     @Override
     public Item getItemById(int id) throws RecordNotFoundException, InternalErrorException {
-        return null;
+        try {
+            return jdbcTemplate.execute("{CALL get_item_with_id(?)}",
+                    (CallableStatementCallback<Item>) cs -> {
+                        cs.setInt(1, id);
+                        ResultSet rs = cs.executeQuery();
+
+                        Item item = null;
+                        if (rs.next()) {
+                            item = ItemMapper.itemRowMapper().mapRow(rs, 1);
+                            item.setItemCategory(ItemCategoryMapper.itemCategoryRowMapper().mapRow(rs, 1));
+                        }
+
+                        return item;
+                    } );
+        } catch (EmptyResultDataAccessException ex) {
+            throw new RecordNotFoundException();
+        } catch (Exception ex) {
+            throw new InternalErrorException();
+        }
     }
 
     @Override
     public List<Item> getAllAvailableItems(LocalDate today) throws InternalErrorException {
-        String sql = "SELECT ItemID, item.ItemCategoryID, ItemName, ItemDescription, StartDate, EndDate, UnitPrice, ItemCategoryName FROM item \n" +
-                "INNER JOIN itemcategory ic ON item.ItemCategoryID = ic.ItemCategoryID\n" +
-                "WHERE (? BETWEEN StartDate AND EndDate) OR\n" +
-                "(EndDate IS NULL AND ? >= StartDate)";
-
         try {
-            return jdbcTemplate.query(sql, ItemMapper.itemRowMapper(), today, today);
+            return jdbcTemplate.execute("{CALL get_all_available_items(?)}",
+                    (CallableStatementCallback<List<Item>>) cs -> {
+                        cs.setDate(1, Date.valueOf(today));
+                        ResultSet rs = cs.executeQuery();
+                        List<Item> items = new ArrayList<>();
+
+
+                        while (rs.next()) {
+                            Item item = ItemMapper.itemRowMapper().mapRow(rs, 1);
+                            item.setItemCategory(ItemCategoryMapper.itemCategoryRowMapper().mapRow(rs, 1));
+
+                            items.add(item);
+                        }
+
+                        return items;
+                    } );
         } catch (Exception ex) {
             throw new InternalErrorException();
         }
@@ -43,7 +77,27 @@ public class MySqlItemRepo implements ItemRepo {
 
     @Override
     public List<Item> getItemsByCategory(LocalDate today, int itemCategoryID) throws InternalErrorException {
-        return List.of();
+        try {
+            return jdbcTemplate.execute("{CALL get_all_available_item_from_category(?, ?)}",
+                    (CallableStatementCallback<List<Item>>) cs -> {
+                        cs.setDate(1, Date.valueOf(today));
+                        cs.setInt(2, itemCategoryID);
+                        ResultSet rs = cs.executeQuery();
+                        List<Item> items = new ArrayList<>();
+
+
+                        while (rs.next()) {
+                            Item item = ItemMapper.itemRowMapper().mapRow(rs, 1);
+                            item.setItemCategory(ItemCategoryMapper.itemCategoryRowMapper().mapRow(rs, 1));
+
+                            items.add(item);
+                        }
+
+                        return items;
+                    } );
+        } catch (Exception ex) {
+            throw new InternalErrorException();
+        }
     }
 
     @Override

@@ -79,6 +79,6 @@ public class OrderItem {
                 ", itemID=" + itemID +
                 ", quantity=" + quantity +
                 ", price=" + price +
-                '}';
+                " item =" + item + "}";
     }
 }
