@@ -81,6 +81,8 @@ public class MySqlOrderRepo implements OrderRepo {
                         if (order != null) {
                             order.setItems(items);
                             order.setPayments(payments);
+                        } else {
+                            throw new EmptyResultDataAccessException(1);
                         }
 
                         return order;
@@ -244,6 +246,10 @@ public class MySqlOrderRepo implements OrderRepo {
 
 
     private void insertOrderItems(Order order) {
+        if (order.getItems() == null) {
+            return;
+        }
+
         jdbcTemplate.batchUpdate(
                 "INSERT INTO orderitem (OrderID, ItemID, Quantity, Price) VALUES (?, ?, ?, ?)",
                 new BatchPreparedStatementSetter() {
@@ -267,6 +273,10 @@ public class MySqlOrderRepo implements OrderRepo {
     }
 
     private void insertPayments(Order order) {
+        if (order.getPayments() == null) {
+            return;
+        }
+
         jdbcTemplate.batchUpdate(
                 "INSERT INTO payment (PaymentTypeID, OrderID, Amount) VALUES (?, ?, ?)",
                 new BatchPreparedStatementSetter() {
