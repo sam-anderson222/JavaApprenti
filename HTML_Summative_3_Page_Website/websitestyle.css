@@ -15,6 +15,11 @@ body h6 {
     opacity: 80%;
 }
 
+body hr {
+    width: 90vw;
+    margin-left: 5vw;
+}
+
 nav {
     background-color: rgb(157, 216, 255);
 }
@@ -61,29 +66,55 @@ header {
         font-size: 150%;
     }
 
-    .person-card:hover {
-        border: 1px solid black;
-        border-radius: 1em; /* Evenly rounded corners */
-        padding: 2vw;
-        text-align: center;
-        margin: 0.1vw auto;
-        background-color: rgb(211, 211, 211);
-        font-size: 150%;
-    }
+.person-card:hover {
+    border: 1px solid black;
+    border-radius: 1em; /* Evenly rounded corners */
+    padding: 2vw;
+    text-align: center;
+    margin: 0.1vw auto;
+    background-color: rgb(211, 211, 211);
+    font-size: 150%;
+}
+
+.contact-info-list li {
+    font-style:italic;
+    font-size: 120%;
+    margin-left: 1em;
+    margin-top: 1em;
+    color: black;
+}
+
+.contact-info-list li:hover {
+    font-style:italic;
+    font-size: 120%;
+    margin-left: 1em;
+    margin-top: 1em;
+    color: rgb(58, 111, 255);
+    text-decoration: underline;
+}
+
+.message-us-form .form-row {
+    margin-top: 1em;
+}
+
+.message-us-form label {
+    align-items: top;
+    vertical-align: top;
+}
 
 /* Media Styling*/
 
 /* Computer */
 @media (min-width: 769px) {
     .flex-img {
-        border: 2px green solid;
+        border: 2px lightblue solid;
     }
 }
 
 /* Styles for tablets */
 @media (max-width: 768px) {
     .flex-img {
-        border: 2px yellow solid;
+        border: 2px purple solid;
     }
 }
 

@@ -18,5 +18,51 @@
                 <a href="/contact.html" class="btn btn-outline-primary">Contact Us</a>
             </div>
         </nav>
+        <main>
+            <!-- Form on left column, image on right -->
+            <div class="container-fluid">
+                <div class="row align-items-top">
+                    <div class="col-md-6">
+                        <!-- Form -->
+                        <h2 class="mt-2">Message Us</h2>
+
+                        <form class="message-us-form" action="/index.html" method="get">
+                            <div class="form-row">
+                                <label for="name">Name: </label>
+                                <input type="text" id="name" name="name">
+                            </div>
+                            <div class="form-row">
+                                <label for="email">Email: </label>
+                                <input type="email" id="email" name="email">
+                            </div>
+                            <div class="form-row">
+                                <label for="message">Message: </label>
+                                <textarea id="message" name="message"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit">Send Message</button>
+                            </div>
+                        </form>
+
+                        <!-- Contact Info -->
+                        <h4 class="text-center"><u>Or</u></h4>
+                        <h2 class="mt-2">Contact Info</h2>
+
+                        <ul class="contact-info-list">
+                            <li>Email - sample@gmail.com</li>
+                            <li>Phone - 1+ (123)-456-7890</li>
+                            <li>Facebook - TechSolutionsFB</li>
+                            <li>Instagram - TechSolutionsIG</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="images/contact-us.jpg" alt="Contact Us" class="img-fluid flex-img mt-4">
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <h6>© Copyright TechSolutions 2025</h6>
+        </footer>
     </body>
 </html>
