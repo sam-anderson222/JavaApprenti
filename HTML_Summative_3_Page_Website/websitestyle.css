@@ -1,0 +1,96 @@
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body p {
+    margin-left: 1vw;
+}
+
+body h2 {
+    margin-left: 0.5vw;
+}
+
+body h6 {
+    margin-left: 0.3vw;
+    opacity: 80%;
+}
+
+nav {
+    background-color: rgb(157, 216, 255);
+}
+
+
+header {
+    background-color: rgba(54, 164, 255, 0.993);
+    border-top: 0.1vw;
+    border-bottom: 0.1vw;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: rgb(47, 120, 255);
+    border-style: solid;
+    padding-left: 0.2vw;
+}
+
+.btn-outline-primary {
+    border-color: black;
+}
+
+.btn-group a {
+    margin-top: 0.1vw;
+    margin-bottom: 0.1vw;
+    margin-left: 0.2vw;
+    color:black;
+}
+
+.navbar-border {
+    border-top: 0.15vw;
+    border-bottom: 0.15vw;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: rgb(47, 120, 255);
+    border-style: solid;
+}
+
+.person-card {
+        border: 1px solid black;
+        border-radius: 1em; /* Evenly rounded corners */
+        padding: 2vw;
+        text-align: center;
+        margin: 0.1vw auto;
+        background-color: white;
+        font-size: 150%;
+    }
+
+    .person-card:hover {
+        border: 1px solid black;
+        border-radius: 1em; /* Evenly rounded corners */
+        padding: 2vw;
+        text-align: center;
+        margin: 0.1vw auto;
+        background-color: rgb(211, 211, 211);
+        font-size: 150%;
+    }
+
+/* Media Styling*/
+
+/* Computer */
+@media (min-width: 769px) {
+    .flex-img {
+        border: 2px green solid;
+    }
+}
+
+/* Styles for tablets */
+@media (max-width: 768px) {
+    .flex-img {
+        border: 2px yellow solid;
+    }
+}
+
+/* Styles for mobile phones */
+@media (max-width: 480px) {
+    .flex-img {
+        border: 2px red solid;
+    }
+}
+
