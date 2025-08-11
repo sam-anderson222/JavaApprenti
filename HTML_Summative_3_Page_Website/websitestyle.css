@@ -4,10 +4,12 @@ body {
 
 body p {
     margin-left: 1vw;
+    margin-bottom: 0.1em;
 }
 
 body h2 {
     margin-left: 0.5vw;
+    margin-top: 0.3em;
 }
 
 body h6 {
@@ -18,6 +20,11 @@ body h6 {
 body hr {
     width: 90vw;
     margin-left: 5vw;
+}
+
+body .container-fluid {
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
 
 nav {
