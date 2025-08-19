@@ -2,6 +2,7 @@ package com.example.VoxPopuli.controller;
 
 import com.example.VoxPopuli.model.Poll;
 import com.example.VoxPopuli.model.PollOverview;
+import com.example.VoxPopuli.repository.PollOptionRepository;
 import com.example.VoxPopuli.repository.PollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class PollAPIController {
 
     @Autowired
     PollRepository pollRepo;
+
+    @Autowired
+    PollOptionRepository pollOptionRepo;
 
     @GetMapping
     public ResponseEntity<List<Poll>> getAllPolls() {

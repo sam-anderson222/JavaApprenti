@@ -1,11 +1,14 @@
 package com.example.VoxPopuli.repository.impl;
 
 import com.example.VoxPopuli.model.Poll;
+import com.example.VoxPopuli.model.PollOption;
 import com.example.VoxPopuli.model.PollOverview;
 import com.example.VoxPopuli.model.User;
+import com.example.VoxPopuli.repository.PollOptionRepository;
 import com.example.VoxPopuli.repository.PollRepository;
 import com.example.VoxPopuli.repository.exceptions.DatabaseErrorException;
 import com.example.VoxPopuli.repository.mappers.PollMapper;
+import com.example.VoxPopuli.repository.mappers.PollOptionMapper;
 import com.example.VoxPopuli.repository.mappers.PollOverviewMapper;
 import com.example.VoxPopuli.repository.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +31,43 @@ public class mySqlPollRepo implements PollRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private PollOptionRepository pollOptionRepository;
+
     @Override
     public List<Poll> getAllPolls() {
-        String sql = "SELECT * FROM poll";
-
         try {
-            return jdbcTemplate.query(sql, PollMapper.pollRowMapper());
+            return jdbcTemplate.execute("{CALL get_all_polls_with_options()}",
+                    (CallableStatementCallback<List<Poll>>) cs -> {
+                        boolean hasResults = cs.execute();
+                        HashMap<Integer, Poll> polls = new HashMap<>();
+
+                        // Get all polls
+                        if (hasResults) {
+                            try (ResultSet rs = cs.getResultSet()) {
+                                while (rs.next()) {
+                                    Poll p = PollMapper.pollRowMapper().mapRow(rs, 1);
+
+                                    polls.put(p.getPollId(), p);
+                                }
+                            }
+                        }
+
+                        hasResults = cs.getMoreResults();
+
+                        if (hasResults) {
+                            try (ResultSet rs = cs.getResultSet()) {
+                                while (rs.next()) {
+                                    PollOption po = PollOptionMapper.pollOptionRowMapper().mapRow(rs,1);
+
+                                    polls.get(po.getPollId()).addOption(po);
+                                }
+                            }
+                        }
+
+                        return new ArrayList<>(polls.values());
+
+                    });
         } catch (Exception ex) {
             throw new DatabaseErrorException();
         }
@@ -44,7 +78,8 @@ public class mySqlPollRepo implements PollRepository {
         String sql = "SELECT * FROM poll WHERE poll_id = ?";
 
         try {
-            Poll poll = jdbcTemplate.queryForObject(sql, PollMapper.pollRowMapper(), pollId);
+            Poll poll = jdbcTemplate.queryForObject(sql, PollMapper.pollRowMapper(), pollId); // Get poll object
+            poll.setOptions(pollOptionRepository.getAllPollOptionsForPoll(poll.getPollId())); // Get options for poll.
             return Optional.of(poll);
         } catch (EmptyResultDataAccessException ex) { // If no user found with this id.
             return Optional.empty();

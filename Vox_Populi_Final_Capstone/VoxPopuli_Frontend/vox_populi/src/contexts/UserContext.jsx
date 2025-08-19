@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import UserContext from "./CreateUserContext";
+import Loading from "../components/Loading";
 
 export function UserProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,15 +40,7 @@ export function UserProvider({ children }) {
     }
 
     if (loading) {
-        return (
-            <div className="container mt-4">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        )
+        return Loading();
     }
 
     // The context wraps it's children so the context variables can be used inside the children components.

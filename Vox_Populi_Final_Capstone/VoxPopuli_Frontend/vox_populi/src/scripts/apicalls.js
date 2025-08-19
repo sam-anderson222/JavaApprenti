@@ -12,6 +12,17 @@ export async function getAllPollOverviews() {
     return data;
 };
 
+export async function getPoll(id) {
+    // call the api
+    const response = await fetch(`http://localhost:8080/api/polls/${id}`);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+
+    const data = await response.json();
+    return data;
+};
 export async function getAllUsers() {
     // call the api
     const response = await fetch('http://localhost:8080/api/users');

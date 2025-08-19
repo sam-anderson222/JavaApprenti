@@ -18,24 +18,24 @@ BEGIN
     (1, "Admin"),
     (2, "User");
     
-	INSERT INTO users (username, user_password) VALUES 
-	("TestUserA", "TestPassword1"),
-	("TestUserB", "TestPassword2"),
-	("TestUserC", "TestPassword3"),
-	("TestUserD", "TestPassword4"),
-	("TestUserE", "TestPassword5"),
-	("TestUserF", "TestPassword6"),
-	("TestUserG", "TestPassword7"),
-	("TestUserH", "TestPassword8"),
-	("TestUserI", "TestPassword9"),
-	("TestUserJ", "TestPassword10"),
-	("TestUserK", "TestPassword11"),
-	("TestUserL", "TestPassword12"),
-	("TestUserM", "TestPassword13"),
-	("TestUserN", "TestPassword14"),
-	("TestUserO", "TestPassword15"),
-	("TestUserP", "TestPassword16"),
-	("TestUserQ", "TestPassword17");
+	INSERT INTO users (username, user_password, access_level) VALUES 
+	("TestUserA", "TestPassword1", 2),
+	("TestUserB", "TestPassword2", 2),
+	("TestUserC", "TestPassword3", 2),
+	("TestUserD", "TestPassword4", 2),
+	("TestUserE", "TestPassword5", 2),
+	("TestUserF", "TestPassword6", 2),
+	("TestUserG", "TestPassword7", 2),
+	("TestUserH", "TestPassword8", 2),
+	("TestUserI", "TestPassword9", 2),
+	("TestUserJ", "TestPassword10", 2),
+	("TestUserK", "TestPassword11", 2),
+	("TestUserL", "TestPassword12", 2),
+	("TestUserM", "TestPassword13", 2),
+	("TestUserN", "TestPassword14", 2),
+	("TestUserO", "TestPassword15", 2),
+	("TestUserP", "TestPassword16", 2),
+	("TestUserQ", "TestPassword17", 2);
     
 	INSERT INTO users (username, user_password, access_level) VALUES 
     ("TestUserAdmin", "TestPasswordAdmin", 1);
@@ -44,7 +44,8 @@ BEGIN
 	(1, "Coke Or Pepsi?", "The age old question: Coke Vs. Pepsi?"),
 	(2, "Which Season Do You Think is Best?", "Cold or Hot? Which season of the year do you like the most?"),
 	(3, "Best Genre of Music?", "Pick which genre of music you like the most!"),
-	(4, "Best Soda Brand?", "Which soft drink brand do you like more?");
+	(4, "Best Soda Brand?", "Which soft drink brand do you like more?"),
+    (10, "Test Poll", "This is a sample poll that starts with only 3 votes.");
 
 	INSERT INTO poll_options (poll_id, option_number, option_name) VALUES
 	(1, 1, "Coke"),
@@ -64,7 +65,10 @@ BEGIN
 	(4, 2, "Pepsi"),
 	(4, 3, "Dr.Pepper"),
 	(4, 4, "Sprite"),
-	(4, 5, "Fanta");
+	(4, 5, "Fanta"),
+    (5, 1, "Left"),
+    (5, 2, "Middle"),
+    (5, 3, "Right");
 
 	INSERT INTO poll_votes(user_id, poll_id, option_number) VALUES
 	(1, 1, 1),
@@ -134,6 +138,9 @@ BEGIN
 	(14, 4, 4),
     (15, 4, 5),
     (16, 4, 1),
-	(17, 4, 3);
+	(17, 4, 3),
+    (10, 5, 1),
+    (11, 5, 1),
+    (12, 5, 2);
     
 END //

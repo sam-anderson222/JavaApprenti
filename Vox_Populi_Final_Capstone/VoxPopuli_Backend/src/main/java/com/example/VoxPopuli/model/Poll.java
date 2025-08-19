@@ -1,18 +1,22 @@
 package com.example.VoxPopuli.model;
 
+import java.util.List;
+
 public class Poll {
     private Integer pollId;
     private Integer pollAuthor;
     private String pollTitle;
     private String pollDescription;
+    private List<PollOption> options;
 
     public Poll() {}
 
-    public Poll (Integer pollId, Integer pollAuthor, String pollTitle, String pollDescription) {
+    public Poll (Integer pollId, Integer pollAuthor, String pollTitle, String pollDescription, List<PollOption> options) {
         this.pollId = pollId;
         this.pollAuthor = pollAuthor;
         this.pollTitle = pollTitle;
         this.pollDescription = pollDescription;
+        this.options = options;
     }
 
     // Getters
@@ -31,6 +35,10 @@ public class Poll {
 
     public String getPollTitle() {
         return pollTitle;
+    }
+
+    public List<PollOption> getOptions() {
+        return options;
     }
 
     // Setters
@@ -52,8 +60,16 @@ public class Poll {
         this.pollDescription = pollDescription;
     }
 
+    public void setOptions(List<PollOption> options) {
+        this.options = options;
+    }
+
+    public void addOption(PollOption po) {
+        options.add(po);
+    }
+
     @Override
     public String toString() {
-        return String.format("Poll{pollID=%d, pollAuthor=%d, pollTitle=%s, pollDescription=%s}", pollId, pollAuthor, pollTitle, pollDescription);
+        return String.format("Poll{pollID=%d, pollAuthor=%d, pollTitle=%s, pollDescription=%s, options=%s}", pollId, pollAuthor, pollTitle, pollDescription, options);
     }
 }

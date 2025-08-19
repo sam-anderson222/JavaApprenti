@@ -1,0 +1,20 @@
+.poll-option-button {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+}
+
+.poll-option-button:focus {
+    fill: greenyellow;
+}
+
+.poll-vote-submit-button {
+    padding: 1rem 2rem;
+    font-size: 1.50rem;
+}
+
+/* Make vote button full width on smaller screens */
+@media (max-width: 767px) {
+   .fluid-vote-button {
+        width: 100%;
+    } 
+}

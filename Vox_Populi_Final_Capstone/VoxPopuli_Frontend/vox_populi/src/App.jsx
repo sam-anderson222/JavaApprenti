@@ -7,6 +7,7 @@ import Home from './components/Home';
 import LogIn from './components/LogIn';
 import NaviBar from './components/Navibar';
 import ExplorePolls from './components/ExplorePolls';
+import ViewPoll from './components/ViewPoll';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <Route path="/logIn" element={<LogIn />}/>
               <Route path="/userList" element={<ProtectedRoute><UserList /></ProtectedRoute>}/>
               <Route path="/explorePolls" element={<ProtectedRoute><ExplorePolls /></ProtectedRoute>}/>
+              <Route path="/explorePolls/:id" element={<ProtectedRoute><ViewPoll /></ProtectedRoute>}/>
               <Route/>
             </Routes>
           </div>

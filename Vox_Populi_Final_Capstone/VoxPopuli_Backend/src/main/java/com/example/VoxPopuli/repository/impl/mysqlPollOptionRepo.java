@@ -25,6 +25,17 @@ public class mysqlPollOptionRepo implements PollOptionRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    public List<PollOption> getAllPollOptions() {
+        String sql = "SELECT * FROM poll_options";
+
+        try {
+            return jdbcTemplate.query(sql, PollOptionMapper.pollOptionRowMapper());
+        } catch (Exception ex) {
+            throw new DatabaseErrorException();
+        }
+    }
+
+    @Override
     public List<PollOption> getAllPollOptionsForPoll(Integer pollId) {
         String sql = "SELECT * FROM poll_options WHERE poll_id = ?";
 

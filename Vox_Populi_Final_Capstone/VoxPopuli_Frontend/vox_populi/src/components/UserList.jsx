@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import { getAllUsers } from '../scripts/apicalls';
+import Loading from './Loading';
+import ErrorMessage from './Error';
 
 function UserList() {
     const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -12,7 +15,7 @@ function UserList() {
                 const data = await getAllUsers();
                 setUsers(data);
             } catch(err) {
-                return;
+                setError(err);
             } finally {
                 setLoading(false);
             }
@@ -22,15 +25,11 @@ function UserList() {
     }, [])
 
     if (loading) {
-        return (
-            <div className="container mt-4">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        )
+        return Loading();
+    }
+
+    if (error) {
+        return ErrorMessage(error);
     }
 
     return (
