@@ -1,6 +1,7 @@
 package com.example.VoxPopuli.repository;
 
 import com.example.VoxPopuli.model.Poll;
+import com.example.VoxPopuli.model.PollOverview;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,4 +9,5 @@ import java.util.Optional;
 public interface PollRepository {
     List<Poll> getAllPolls();
     Optional<Poll> getPollById(Integer pollId);
+    List<PollOverview> getAllPollOverviews();
 }

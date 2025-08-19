@@ -4,12 +4,21 @@ DROP TABLE IF EXISTS poll_votes;
 DROP TABLE IF EXISTS poll_options;
 DROP TABLE IF EXISTS poll;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS access_levels;
+
+CREATE TABLE access_levels (
+	access_level_id TINYINT NOT NULL,
+    access_level_title VARCHAR(30) NOT NULL,
+    PRIMARY KEY (access_level_id)
+);
 
 CREATE TABLE users (
 	user_id INT NOT NULL auto_increment,
     username Varchar(30) NOT NULL UNIQUE,
     user_password Varchar(30) NOT NULL,
-    PRIMARY KEY(user_id)
+    access_level TINYINT NOT NULL DEFAULT 2,
+    PRIMARY KEY(user_id),
+	FOREIGN KEY (access_level) REFERENCES access_levels(access_level_id)
 );
 
 CREATE TABLE poll (

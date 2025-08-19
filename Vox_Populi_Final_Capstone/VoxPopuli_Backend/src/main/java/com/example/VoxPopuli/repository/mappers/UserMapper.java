@@ -11,6 +11,7 @@ public class UserMapper {
             user.setUserId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
             user.setUserPassword(rs.getString("user_password"));
+            user.setAccessLevel(rs.getInt("access_level"));
 
             return user;
         };

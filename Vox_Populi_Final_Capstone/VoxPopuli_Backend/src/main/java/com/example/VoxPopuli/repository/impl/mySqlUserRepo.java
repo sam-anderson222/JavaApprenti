@@ -1,6 +1,7 @@
 package com.example.VoxPopuli.repository.impl;
 
 import com.example.VoxPopuli.model.User;
+import com.example.VoxPopuli.model.UserLogInAttempt;
 import com.example.VoxPopuli.repository.UserRepository;
 import com.example.VoxPopuli.repository.exceptions.DatabaseErrorException;
 import com.example.VoxPopuli.repository.mappers.UserMapper;
@@ -46,8 +47,18 @@ public class mySqlUserRepo implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserByUsername(String username) {
-        return Optional.empty();
+    public Optional<User> logIn(UserLogInAttempt logInInfo) {
+        String sql = "SELECT * FROM users WHERE username = ? AND BINARY user_password = ?";
+
+        try {
+            User u = jdbcTemplate.queryForObject(sql, UserMapper.userRowMapper(), logInInfo.getUsername(), logInInfo.getUserPassword());
+            return Optional.of(u);
+        }  catch (EmptyResultDataAccessException ex) { // If invalid log in details, then return this.
+            return Optional.empty();
+        }
+        catch (Exception ex) {
+            throw new DatabaseErrorException();
+        }
     }
 
     @Override
