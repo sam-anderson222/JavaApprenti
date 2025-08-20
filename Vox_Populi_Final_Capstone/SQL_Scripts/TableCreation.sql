@@ -43,6 +43,7 @@ CREATE TABLE poll_votes (
 	user_id INT NOT NULL,
     poll_id INT NOT NULL,
     option_number TINYINT NOT NULL,
+    UNIQUE (user_id, poll_id),
     PRIMARY KEY (user_id, poll_id, option_number),
     FOREIGN KEY(user_id) REFERENCES users(user_id),
     FOREIGN KEY(poll_id, option_number) REFERENCES poll_options(poll_id, option_number)

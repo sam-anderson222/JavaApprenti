@@ -16,7 +16,6 @@ public class UserLogInAttempt {
     }
 
     // Getters
-
     public String getUsername() {
         return username;
     }
@@ -28,7 +27,6 @@ public class UserLogInAttempt {
 
 
     // Setters
-
     public void setUsername(String username) {
         this.username = username;
     }

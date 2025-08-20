@@ -1,10 +1,18 @@
+.view-poll-button {
+    padding: 0.3rem 5rem;
+    font-size: 1.1rem;
+}
+
 .poll-option-button {
     padding: 1rem 2rem;
     font-size: 1.25rem;
+    background-color: white;
+    color: black;
 }
 
-.poll-option-button:focus {
-    fill: greenyellow;
+.selected-poll-option-button {
+    color:rgb(0, 0, 0) !important;
+    background-color: rgb(212, 252, 152) !important;
 }
 
 .poll-vote-submit-button {

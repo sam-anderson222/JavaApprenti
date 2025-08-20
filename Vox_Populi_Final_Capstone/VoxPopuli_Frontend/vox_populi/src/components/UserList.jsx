@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { getAllUsers } from '../scripts/apicalls';
+import { Navigate } from 'react-router';
+import UserContext from '../contexts/CreateUserContext';
 import Loading from './Loading';
 import ErrorMessage from './Error';
 
 function UserList() {
+    const { userData } = useContext(UserContext);
+
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         const fetchAllUsers = async () => {
@@ -23,6 +28,10 @@ function UserList() {
 
         fetchAllUsers();
     }, [])
+
+    if (userData.accessLevel !== 1) {
+        return (<Navigate to='/'/>)
+    }
 
     if (loading) {
         return Loading();

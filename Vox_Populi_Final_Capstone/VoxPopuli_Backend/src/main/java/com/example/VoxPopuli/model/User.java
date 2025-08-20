@@ -35,7 +35,6 @@ public class User {
     }
 
     // Setters
-
     public void setUserId(Integer userId) {
         this.userId = userId;
     }

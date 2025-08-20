@@ -1,9 +1,6 @@
 package com.example.VoxPopuli.repository.impl;
 
-import com.example.VoxPopuli.model.Poll;
-import com.example.VoxPopuli.model.PollOption;
-import com.example.VoxPopuli.model.PollOverview;
-import com.example.VoxPopuli.model.User;
+import com.example.VoxPopuli.model.*;
 import com.example.VoxPopuli.repository.PollOptionRepository;
 import com.example.VoxPopuli.repository.PollRepository;
 import com.example.VoxPopuli.repository.exceptions.DatabaseErrorException;
@@ -18,6 +15,7 @@ import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;

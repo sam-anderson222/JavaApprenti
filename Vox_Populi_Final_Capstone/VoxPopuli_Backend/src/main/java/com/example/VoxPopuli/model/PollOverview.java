@@ -1,4 +1,6 @@
 package com.example.VoxPopuli.model;
+// A poll overview contains extra info about a poll, like the author's username and how many votes are on a poll.
+// Does not go to any database object, is purely for front-end display.
 
 public class PollOverview {
     private Integer pollId;
@@ -20,7 +22,6 @@ public class PollOverview {
     }
 
     // Getters
-
     public Integer getPollId() {
         return pollId;
     }
@@ -46,8 +47,6 @@ public class PollOverview {
     }
 
     // Setters
-
-
     public void setPollId(Integer pollId) {
         this.pollId = pollId;
     }

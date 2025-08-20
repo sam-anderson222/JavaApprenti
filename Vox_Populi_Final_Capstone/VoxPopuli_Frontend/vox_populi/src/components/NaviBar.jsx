@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import UserContext from '../contexts/CreateUserContext';
 
 function NaviBar() {
-    const { isLoggedIn, logout } = useContext(UserContext);
+    const { isLoggedIn, logout, userData } = useContext(UserContext);
 
 
     return (
@@ -16,9 +16,11 @@ function NaviBar() {
                     <ul className='nav nav-pills'>
                     {isLoggedIn ? (
                         <> 
-                            <li> 
-                                <NavLink className='nav-link' to="/userList">Users</NavLink>
-                            </li>
+                            {userData.accessLevel === 1 && (
+                                <li> 
+                                    <NavLink className='nav-link' to="/userList">Users</NavLink>
+                                </li>
+                            )}
                             <li> 
                                 <NavLink className='nav-link' to="/explorePolls">Explore</NavLink>
                             </li>

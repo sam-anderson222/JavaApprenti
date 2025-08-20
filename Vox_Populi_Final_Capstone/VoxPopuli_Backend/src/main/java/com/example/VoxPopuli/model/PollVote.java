@@ -1,22 +1,23 @@
 package com.example.VoxPopuli.model;
 
-public class PollOption {
+public class PollVote {
+    private Integer userId;
     private Integer pollId;
     private Integer optionNumber;
-    private String optionName;
 
-    // Default Constructor
-    public PollOption() {}
+    public PollVote(){}
 
-    // Constructor with parameters
-    public PollOption(Integer pollId, Integer optionNumber, String optionName) {
+    public PollVote(Integer userId, Integer pollId, Integer optionNumber) {
+        this.userId = userId;
         this.pollId = pollId;
         this.optionNumber = optionNumber;
-        this.optionName = optionName;
-
     }
 
     // Getters
+    public Integer getUserId() {
+        return userId;
+    }
+
     public Integer getPollId() {
         return pollId;
     }
@@ -25,11 +26,12 @@ public class PollOption {
         return optionNumber;
     }
 
-    public String getOptionName() {
-        return optionName;
-    }
 
     // Setters
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public void setPollId(Integer pollId) {
         this.pollId = pollId;
     }
@@ -38,12 +40,8 @@ public class PollOption {
         this.optionNumber = optionNumber;
     }
 
-    public void setOptionName(String optionName) {
-        this.optionName = optionName;
-    }
-
     @Override
     public String toString() {
-        return String.format("PollOption{pollId=%d, optionNumber=%d, optionName=%s}", pollId, optionNumber, optionName);
+        return String.format("PollVote{userId=%d, pollId=%d, optionNumber=%d}", userId, pollId, optionNumber);
     }
 }

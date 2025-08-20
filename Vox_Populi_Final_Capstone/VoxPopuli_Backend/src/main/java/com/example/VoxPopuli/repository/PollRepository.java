@@ -2,6 +2,7 @@ package com.example.VoxPopuli.repository;
 
 import com.example.VoxPopuli.model.Poll;
 import com.example.VoxPopuli.model.PollOverview;
+import com.example.VoxPopuli.model.PollVote;
 
 import java.util.List;
 import java.util.Optional;

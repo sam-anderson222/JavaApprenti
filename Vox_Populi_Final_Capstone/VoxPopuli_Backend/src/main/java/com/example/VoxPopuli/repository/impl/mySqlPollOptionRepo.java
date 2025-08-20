@@ -1,13 +1,9 @@
 package com.example.VoxPopuli.repository.impl;
 
-import com.example.VoxPopuli.model.Poll;
 import com.example.VoxPopuli.model.PollOption;
-import com.example.VoxPopuli.model.User;
 import com.example.VoxPopuli.repository.PollOptionRepository;
 import com.example.VoxPopuli.repository.exceptions.DatabaseErrorException;
-import com.example.VoxPopuli.repository.mappers.PollMapper;
 import com.example.VoxPopuli.repository.mappers.PollOptionMapper;
-import com.example.VoxPopuli.repository.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 @Primary
-public class mysqlPollOptionRepo implements PollOptionRepository {
+public class mySqlPollOptionRepo implements PollOptionRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

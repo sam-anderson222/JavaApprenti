@@ -45,7 +45,7 @@ function ExplorePolls() {
                                     <h5 className='card-subtitle mb-2 text-muted'>{poll.pollDescription}</h5>
                                     <h6><small className='text-muted'> By: {poll.pollAuthorUsername}</small></h6>
                                     <h6 className='card-text'><small className='text-muted'>Votes: {poll.votesOnPoll}</small></h6>
-                                    <Link type="button" className='btn btn-primary' to={`/explorePolls/${poll.pollId}`}>View Poll</Link>
+                                    <Link type="button" className='btn btn-primary view-poll-button' to={`/explorePolls/${poll.pollId}`}>View Poll</Link>
                                 </div>
                             </div>
                         ))}

@@ -8,8 +8,9 @@ BEGIN
 	DELETE FROM poll_votes;
     DELETE FROM poll_options;
 	DELETE FROM poll;
-    DELETE FROM access_levels;
     DELETE FROM users;
+    DELETE FROM access_levels;
+    
     
     ALTER TABLE poll AUTO_INCREMENT = 1;
     ALTER TABLE users AUTO_INCREMENT = 1;
@@ -35,7 +36,8 @@ BEGIN
 	("TestUserN", "TestPassword14", 2),
 	("TestUserO", "TestPassword15", 2),
 	("TestUserP", "TestPassword16", 2),
-	("TestUserQ", "TestPassword17", 2);
+	("TestUserQ", "TestPassword17", 2),
+    ("TestAdmin", "Admin", 1);
     
 	INSERT INTO users (username, user_password, access_level) VALUES 
     ("TestUserAdmin", "TestPasswordAdmin", 1);
@@ -141,6 +143,6 @@ BEGIN
 	(17, 4, 3),
     (10, 5, 1),
     (11, 5, 1),
-    (12, 5, 2);
+    (12, 5, 3);
     
 END //

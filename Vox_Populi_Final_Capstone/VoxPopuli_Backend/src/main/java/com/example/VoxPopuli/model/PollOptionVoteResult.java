@@ -1,26 +1,19 @@
 package com.example.VoxPopuli.model;
 
-public class PollOption {
-    private Integer pollId;
+public class PollOptionVoteResult {
     private Integer optionNumber;
     private String optionName;
+    private Integer optionVotes;
 
-    // Default Constructor
-    public PollOption() {}
+    public PollOptionVoteResult (){}
 
-    // Constructor with parameters
-    public PollOption(Integer pollId, Integer optionNumber, String optionName) {
-        this.pollId = pollId;
+    public PollOptionVoteResult(Integer optionNumber, String optionName, Integer optionVotes) {
         this.optionNumber = optionNumber;
         this.optionName = optionName;
-
+        this.optionVotes = optionVotes;
     }
 
     // Getters
-    public Integer getPollId() {
-        return pollId;
-    }
-
     public Integer getOptionNumber() {
         return optionNumber;
     }
@@ -29,11 +22,11 @@ public class PollOption {
         return optionName;
     }
 
-    // Setters
-    public void setPollId(Integer pollId) {
-        this.pollId = pollId;
+    public Integer getOptionVotes() {
+        return optionVotes;
     }
 
+    // Setters
     public void setOptionNumber(Integer optionNumber) {
         this.optionNumber = optionNumber;
     }
@@ -42,8 +35,12 @@ public class PollOption {
         this.optionName = optionName;
     }
 
+    public void setOptionVotes(Integer optionVotes) {
+        this.optionVotes = optionVotes;
+    }
+
     @Override
     public String toString() {
-        return String.format("PollOption{pollId=%d, optionNumber=%d, optionName=%s}", pollId, optionNumber, optionName);
+        return String.format("PollOptionVoteResult{optionNumber=%d, optionName=%s, optionVotes=%d}", optionNumber, optionName, optionVotes);
     }
 }

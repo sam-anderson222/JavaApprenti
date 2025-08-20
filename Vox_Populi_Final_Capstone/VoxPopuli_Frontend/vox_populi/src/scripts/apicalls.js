@@ -23,6 +23,7 @@ export async function getPoll(id) {
     const data = await response.json();
     return data;
 };
+
 export async function getAllUsers() {
     // call the api
     const response = await fetch('http://localhost:8080/api/users');
@@ -53,3 +54,51 @@ export async function attemptLogIn(logInData) {
         throw new Error(`HTTP error! Status: ${response.status}`)
     }
 }
+
+export async function voteOnPoll(pollVote) {
+    const response = await fetch('http://localhost:8080/api/pollVotes/vote', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(pollVote)
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+}
+
+export async function getUserVoteOnPoll(pollId, user) {
+    const response = await fetch(`http://localhost:8080/api/pollVotes/hasVoted/${pollId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user)
+    });
+
+    if (response.status == 204) {
+        return null; // Do nothing, as 204 means user hasn't voted on this poll yet.
+    } else if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+}
+
+export async function getPollResults(id) {
+    // call the api
+    const response = await fetch(`http://localhost:8080/api/pollVotes/${id}`);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+
+    const data = await response.json();
+    return data;
+};
