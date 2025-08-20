@@ -2,15 +2,15 @@ package com.example.VoxPopuli.model;
 
 // Holds data from a user login attempt (only username and password)
 // Is used to pass into the UserRepo to attempt a login.
-public class UserLogInAttempt {
+public class UserLogInSignUpAttempt {
     private String username;
     private String userPassword;
 
     // Default Constructor
-    public UserLogInAttempt() {}
+    public UserLogInSignUpAttempt() {}
 
     // Constructor with parameters
-    public UserLogInAttempt(String username, String userPassword) {
+    public UserLogInSignUpAttempt(String username, String userPassword) {
         this.username = username;
         this.userPassword = userPassword;
     }

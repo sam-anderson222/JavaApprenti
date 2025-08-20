@@ -1,37 +1,36 @@
 import { useState } from "react";
-import { attemptLogIn } from "../scripts/apicalls";
 import UserContext from "../contexts/CreateUserContext";
 import { useContext } from "react";
 import { Navigate } from "react-router";
+import SuccessMessage from "./Success";
+import { attemptSignUp } from "../scripts/apicalls";
 
-function LogIn() {
-    const { login } = useContext(UserContext);
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [redirectUserToHome, setRedirectUserToHome] = useState(false);
+function SignUp() {
+    const [error, setError] = useState(null);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     // 'e' is is the automatically create event handler object.
     const handleSubmit = async (e) => {
         e.preventDefault()
         
         const formData = new FormData(e.target);
-        const userLogInData = {
+        const userSignUpData = {
             username: formData.get('_user'),
             userPassword: formData.get('_pass')
         };
 
         try {
-            const user = await attemptLogIn(userLogInData);
-            login(user);
-            setRedirectUserToHome(true);
+            await attemptSignUp(userSignUpData);
+            setShowSuccessMessage(true);
         } catch (err) {
-            setShowErrorMessage(true);
+            setError(err);
         }
 
 
     };
 
-    if (redirectUserToHome) {
-        return (<Navigate to="/" />)
+    if (showSuccessMessage) {
+        return SuccessMessage("Account Successfully Created. Proceed to Login Page.")
     }
 
     return (
@@ -39,7 +38,7 @@ function LogIn() {
             <div className="row mb-5 justify-content-center w-80">
                 <div className="col-md-5">
 
-                        <h2>Login</h2>
+                        <h2>Sign Up</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="row mt-5 mb-5 justify-content-center">
                                 <label>Username: </label>
@@ -58,14 +57,14 @@ function LogIn() {
                             </div>
 
                             <div className="row mb-5 justify-content-center">
-                                {showErrorMessage && (
-                                    <div className="alert alert-info mt-2" role="alert">Error: Invalid Login Info.</div>
+                                {error && (
+                                    <div className="alert alert-info mt-2" role="alert">Error: Could Not Create Account. Please Try Again</div>
                                 )}
                             </div>
 
                             <div className="row mb-5 justify-content-center">
                                 <button type="submit" className="btn btn-primary">
-                                    Log In
+                                    Sign Up
                                 </button>
                             </div>
                         </form>
@@ -78,4 +77,4 @@ function LogIn() {
 
 }
 
-export default LogIn;
+export default SignUp;

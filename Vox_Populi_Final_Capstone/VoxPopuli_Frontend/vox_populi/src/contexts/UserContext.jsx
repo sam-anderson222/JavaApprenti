@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import UserContext from "./CreateUserContext";
 import Loading from "../components/Loading";
+import { attemptLogIn } from "../scripts/apicalls";
 
 export function UserProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);

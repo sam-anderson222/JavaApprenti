@@ -33,6 +33,9 @@ function NaviBar() {
                             <li className='nav-item'>
                                  <NavLink className='nav-link' to="/logIn">Log In</NavLink>
                             </li>
+                            <li className='nav-item'>
+                                 <NavLink className='nav-link' to="/signUp">Sign Up</NavLink>
+                            </li>
                         </>  
                     )}
                     </ul>

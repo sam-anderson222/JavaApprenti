@@ -55,6 +55,25 @@ export async function attemptLogIn(logInData) {
     }
 }
 
+export async function attemptSignUp(signUpData) {
+    const response = await fetch('http://localhost:8080/api/users/signUp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(signUpData)
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else if (response.status == 409) {
+        throw new Error('Could Not Register Account.');
+    } else {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+}
+
 export async function voteOnPoll(pollVote) {
     const response = await fetch('http://localhost:8080/api/pollVotes/vote', {
         method: 'POST',
