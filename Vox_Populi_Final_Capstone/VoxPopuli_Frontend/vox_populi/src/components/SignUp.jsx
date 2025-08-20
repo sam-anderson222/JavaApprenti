@@ -44,6 +44,7 @@ function SignUp() {
                                 <label>Username: </label>
                                 <input 
                                     name='_user'
+                                    className="form-control"
                                     type="text"
                                 />
                             </div>
@@ -52,13 +53,14 @@ function SignUp() {
                                 <label>Password: </label>
                                 <input 
                                     name='_pass'
+                                    className="form-control"
                                     type="text"
                                 />
                             </div>
 
                             <div className="row mb-5 justify-content-center">
                                 {error && (
-                                    <div className="alert alert-info mt-2" role="alert">Error: Could Not Create Account. Please Try Again</div>
+                                    <div className="alert alert-warning mt-2" role="alert">Error: Could Not Create Account. Please Try Again</div>
                                 )}
                             </div>
 

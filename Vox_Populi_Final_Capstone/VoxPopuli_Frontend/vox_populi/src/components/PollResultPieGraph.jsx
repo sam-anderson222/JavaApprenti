@@ -4,6 +4,7 @@ import * as d3 from "d3";
 const PieChart = ({ data, size = 300 }) => {
   const ref = useRef();
 
+  // Only render the label if it takes up more than 10% of pie 
   function doShowOptionLabel(d) {
         let totalNumberOfVotes = 0
         data.map((d) => {
@@ -37,12 +38,12 @@ const PieChart = ({ data, size = 300 }) => {
 
     // This draws the arcs
     g.selectAll("path") // This is just magic... Just copy and paste. 
-        .data(arcs) // Binds the arcs array to a 
-        .join("path") // No clue what this does, but it doesn't work without it here, so it must be important.
+        .data(arcs) // Binds the arcs array
+        .join("path") 
         .attr("d", arc) // Call the arc shape generator on each item from the data.
-        .attr("fill", (d, i) => (color(i % 10)))  // Tells how to render each arc of the pie.
-        .attr("stroke", "#000")  // border color
-        .attr("stroke-width", 1) // border width
+        .attr("fill", (d, i) => (color(i % 10)))  // Tells how to render each arc of the pie. Made mod 10 so colors repeat in an loop.
+        .attr("stroke", "#000")  // Border color
+        .attr("stroke-width", 1) // Border width
 
     // This adds labels for each arc
     g.selectAll("text")
@@ -52,7 +53,7 @@ const PieChart = ({ data, size = 300 }) => {
         .attr("text-anchor", "middle")
         .attr("font-size", "0.7rem")
         .attr("font-weight", "bold")
-        .text(d => doShowOptionLabel(d.data)); // Only render the label if it takes up more than 10% of pie 
+        .text(d => doShowOptionLabel(d.data));
   }, [data, size]);
 
   return (

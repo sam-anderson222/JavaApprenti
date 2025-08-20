@@ -10,6 +10,7 @@ import ExplorePolls from './components/ExplorePolls';
 import ViewPoll from './components/ViewPoll';
 import PollVoteResult from './components/PollVoteResult';
 import SignUp from './components/SignUp';
+import CreatePoll from './components/CreatePoll';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/explorePolls" element={<ProtectedRoute><ExplorePolls /></ProtectedRoute>}/>
               <Route path="/explorePolls/:id" element={<ProtectedRoute><ViewPoll /></ProtectedRoute>}/>
               <Route path="/pollVoteResult/:id" element={<ProtectedRoute><PollVoteResult /></ProtectedRoute>}/>
+              <Route path="/createPoll" element={<ProtectedRoute><CreatePoll /></ProtectedRoute>}/>
               <Route path="*" element={<Home />}/>
               <Route/>
             </Routes>

@@ -108,7 +108,7 @@ function ViewPoll() {
                     // Only render every 2 options as a row
                     if (i % 2 !== 0) return null;
 
-                    const nextOption = poll.options[i + 1];
+                    const nextOption = poll.options[i + 1]; // Check if there's a option after this option.
 
                     return (
                         <div className="row mb-3 justify-content-center" key={i}>

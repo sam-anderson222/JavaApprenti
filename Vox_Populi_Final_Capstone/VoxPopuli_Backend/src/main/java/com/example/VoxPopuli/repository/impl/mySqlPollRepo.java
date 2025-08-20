@@ -127,4 +127,9 @@ public class mySqlPollRepo implements PollRepository {
             throw new DatabaseErrorException();
         }
     }
+
+    @Override
+    public boolean savePoll(Poll poll) {
+        return false;
+    }
 }

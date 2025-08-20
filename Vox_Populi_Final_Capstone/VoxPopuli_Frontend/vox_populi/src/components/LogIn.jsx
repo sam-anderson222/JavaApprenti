@@ -45,6 +45,7 @@ function LogIn() {
                                 <label>Username: </label>
                                 <input 
                                     name='_user'
+                                    className="form-control"
                                     type="text"
                                 />
                             </div>
@@ -53,13 +54,14 @@ function LogIn() {
                                 <label>Password: </label>
                                 <input 
                                     name='_pass'
+                                    className="form-control"
                                     type="text"
                                 />
                             </div>
 
                             <div className="row mb-5 justify-content-center">
                                 {showErrorMessage && (
-                                    <div className="alert alert-info mt-2" role="alert">Error: Invalid Login Info.</div>
+                                    <div className="alert alert-warning mt-2" role="alert">Error: Invalid Login Info.</div>
                                 )}
                             </div>
 
