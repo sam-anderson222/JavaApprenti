@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -53,6 +55,7 @@ public class mySqlPollRepo implements PollRepository {
 
                         hasResults = cs.getMoreResults();
 
+                        // Getting all poll options for polls
                         if (hasResults) {
                             try (ResultSet rs = cs.getResultSet()) {
                                 while (rs.next()) {
@@ -130,6 +133,56 @@ public class mySqlPollRepo implements PollRepository {
 
     @Override
     public boolean savePoll(Poll poll) {
-        return false;
+        String sql = "INSERT INTO poll (poll_author, poll_title, poll_description) VALUES (?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        // Add the poll to the DB
+        try {
+            jdbcTemplate.update(con -> {
+                PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+                ps.setInt(1, poll.getPollAuthor());
+                ps.setString(2, poll.getPollTitle());
+                ps.setString(3, poll.getPollDescription());
+
+                return ps;
+            }, keyHolder);
+
+            poll.setPollId(keyHolder.getKey().intValue());
+        } catch (Exception e) {
+            deletePollById(poll.getPollId()); // If adding the poll fails, attempt to delete if from the DB.
+            return false;
+        }
+
+        // Add the options to the poll now that we have the pollID.
+        boolean addedOptionsSuccessfully = pollOptionRepository.saveOptionsForPoll(poll.getPollId(), poll.getOptions());
+
+        if (addedOptionsSuccessfully) {
+            return true;
+        } else {
+            deletePollById(poll.getPollId()); // If we fail to add the options to the poll, delete the poll from the DB.
+            return false;
+        }
+
+    }
+
+    // Calls a SPROC that deletes a poll, all its options, and its votes.
+    @Override
+    public boolean deletePollById(Integer pollId) {
+        String sql = "{CALL delete_poll(?)}";
+
+        try {
+            Poll p = jdbcTemplate.execute("{CALL delete_poll(?)}",
+                    (CallableStatementCallback<Poll>) cs -> {
+                        cs.setInt(1, pollId);
+                        cs.execute();
+
+                        return null;
+                    });
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

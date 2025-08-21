@@ -12,4 +12,5 @@ public interface PollRepository {
     Optional<Poll> getPollById(Integer pollId);
     List<PollOverview> getAllPollOverviews();
     boolean savePoll(Poll poll);
+    boolean deletePollById(Integer pollId);
 }

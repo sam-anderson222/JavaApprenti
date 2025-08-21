@@ -20,6 +20,27 @@
     font-size: 1.50rem;
 }
 
+.home-screen-text {
+    font-size: 1.7rem;
+    text-align: center;
+}
+
+.home-screen-subtext {
+    font-size: 1.4rem;
+    line-height: 3rem;
+    text-align: center;
+}
+
+
+.home-link-button {
+    border: 0.08em;
+    border-color: black;
+    border-style: solid;
+    padding: 2rem 5rem;
+    width: 80%;
+    font-size: 1.50rem;
+}
+
 /* Make vote button full width on smaller screens */
 @media (max-width: 767px) {
    .fluid-vote-button {

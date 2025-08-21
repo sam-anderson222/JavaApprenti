@@ -39,7 +39,7 @@ function ViewPoll() {
                     setRedirectUserToResults(true);
                 }
             } catch (err) {
-                setError("1");
+                setError(err);
             }
         }
 
@@ -49,7 +49,7 @@ function ViewPoll() {
                 const data = await getPoll(pollId);
                 setPoll(data);
             } catch (err) {
-                setError("2");
+                setError(err);
             } finally {
                 setLoading(false);
             }
@@ -78,6 +78,9 @@ function ViewPoll() {
             }
         };
 
+    if (error) {
+        return ErrorMessage(error)
+    }
 
     if (loading || !poll) {
         return Loading();
@@ -85,10 +88,6 @@ function ViewPoll() {
 
     if (redirectUserToResults) {
         return ( <Navigate to={`/pollVoteResult/${pollId}`}/>)
-    }
-
-    if (error) {
-        return ErrorMessage(error)
     }
 
     return (

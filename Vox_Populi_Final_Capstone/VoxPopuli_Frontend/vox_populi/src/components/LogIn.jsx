@@ -9,6 +9,8 @@ function LogIn() {
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [redirectUserToHome, setRedirectUserToHome] = useState(false);
 
+    const maxUsernamePasswordLen = 30;
+
     // 'e' is is the automatically create event handler object.
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -47,6 +49,7 @@ function LogIn() {
                                     name='_user'
                                     className="form-control"
                                     type="text"
+                                    maxLength={maxUsernamePasswordLen}
                                 />
                             </div>
 
@@ -56,6 +59,7 @@ function LogIn() {
                                     name='_pass'
                                     className="form-control"
                                     type="text"
+                                    maxLength={maxUsernamePasswordLen}
                                 />
                             </div>
 

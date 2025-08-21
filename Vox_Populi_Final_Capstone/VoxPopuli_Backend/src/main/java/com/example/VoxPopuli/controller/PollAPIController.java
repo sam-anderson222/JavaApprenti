@@ -42,4 +42,17 @@ public class PollAPIController {
         System.out.println("All polls overviews gotten!");
         return ResponseEntity.ok(polls);
     }
+
+    @PostMapping
+    public ResponseEntity<Boolean> createPoll(@RequestBody Poll newPoll) {
+        boolean isSuccess = pollRepo.savePoll(newPoll);
+
+        if (isSuccess) {
+            return ResponseEntity.ok(Boolean.TRUE);
+        } else {
+            // If there is an error on the DB side for submitting the user's vote, then return this.
+            System.out.println("Error, could not add poll");
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
 }

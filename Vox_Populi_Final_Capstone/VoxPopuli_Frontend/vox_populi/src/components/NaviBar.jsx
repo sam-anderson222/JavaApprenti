@@ -14,6 +14,9 @@ function NaviBar() {
                 </div>
                 <header className='d-flex justify-content-center py-3'>
                     <ul className='nav nav-pills'>
+                        <li className='nav-item'>
+                                 <NavLink className='nav-link' to="/">Home</NavLink>
+                            </li>
                     {isLoggedIn ? (
                         <> 
                             {userData.accessLevel === 1 && (

@@ -38,14 +38,11 @@ BEGIN
 	("TestUserP", "TestPassword16", 2),
 	("TestUserQ", "TestPassword17", 2),
     ("TestAdmin", "Admin", 1);
-    
-	INSERT INTO users (username, user_password, access_level) VALUES 
-    ("TestUserAdmin", "TestPasswordAdmin", 1);
 
 	INSERT INTO poll (poll_author, poll_title, poll_description) VALUES
 	(1, "Coke Or Pepsi?", "The age old question: Coke Vs. Pepsi?"),
 	(2, "Which Season Do You Think is Best?", "Cold or Hot? Which season of the year do you like the most?"),
-	(3, "Best Genre of Music?", "Pick which genre of music you like the most!"),
+	(3, "Favorite Genre of Music?", "Pick which genre of music you like the most!"),
 	(4, "Best Soda Brand?", "Which soft drink brand do you like more?"),
     (10, "Test Poll", "This is a sample poll that starts with only 3 votes.");
 

@@ -53,7 +53,7 @@ export async function attemptLogIn(logInData) {
     } else {
         throw new Error(`HTTP error! Status: ${response.status}`)
     }
-}
+};
 
 export async function attemptSignUp(signUpData) {
     const response = await fetch('http://localhost:8080/api/users/signUp', {
@@ -72,7 +72,7 @@ export async function attemptSignUp(signUpData) {
     } else {
         throw new Error(`HTTP error! Status: ${response.status}`)
     }
-}
+};
 
 export async function voteOnPoll(pollVote) {
     const response = await fetch('http://localhost:8080/api/pollVotes/vote', {
@@ -89,7 +89,7 @@ export async function voteOnPoll(pollVote) {
 
     const data = await response.json();
     return data;
-}
+};
 
 export async function getUserVoteOnPoll(pollId, user) {
     const response = await fetch(`http://localhost:8080/api/pollVotes/hasVoted/${pollId}`, {
@@ -108,7 +108,7 @@ export async function getUserVoteOnPoll(pollId, user) {
     } else {
         throw new Error(`HTTP error! Status: ${response.status}`)
     }
-}
+};
 
 export async function getPollResults(id) {
     // call the api
@@ -120,4 +120,23 @@ export async function getPollResults(id) {
 
     const data = await response.json();
     return data;
+};
+
+export async function createNewPoll(newPollData) {
+    const response = await fetch('http://localhost:8080/api/polls', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(newPollData)
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else if (response.status == 409) {
+        throw new Error('Could not create poll.');
+    } else {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+    }
 };

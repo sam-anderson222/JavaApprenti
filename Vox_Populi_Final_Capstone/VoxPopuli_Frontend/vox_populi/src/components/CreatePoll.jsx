@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
+import { createNewPoll } from "../scripts/apicalls";
 import UserContext from "../contexts/CreateUserContext";
-import createPollOptionInput from "./CreatePollOptionInput";
+import SuccessMessage from "./Success";
 
 
 
@@ -10,6 +11,7 @@ function CreatePoll() {
     const [pollTitleText, setPollTitleText] = useState("");
     const [pollDescriptionText, setPollDescriptionText] = useState("");
     const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [redirectToSuccessPage, setRedirectToSuccessPage] = useState(false);
     const [pollOptions, setPollOptions] = useState(["", ""]);
 
     const maxTitleLength = 100;
@@ -41,7 +43,7 @@ function CreatePoll() {
 
     // Turn polls options text into json objects.
     const convertPollOptionsToJson = () => {
-        let addedOptions = 0; // Added options keeps the optionNumber nice while also ensuring that empty options aren't submitted.
+        let addedOptions = 0; // addedOptions keeps the optionNumber nice while also ensuring that empty options aren't submitted.
         let converted = [];
         pollOptions.map((option, i) => {
             if (option !== "") { // Ignore empty options
@@ -55,7 +57,6 @@ function CreatePoll() {
 
     const handleSubmit = async (e) => {
             e.preventDefault()
-            setShowErrorMessage(true);
             
 
             const createPollData = {
@@ -66,14 +67,26 @@ function CreatePoll() {
             };
 
             console.log(createPollData);
+            try {
+                const success = await createNewPoll(createPollData);
+                if (success) {
+                    setRedirectToSuccessPage(true);
+                }
+            } catch (err) {
+                setShowErrorMessage(true);
+            }
     
         };
+
+    if (redirectToSuccessPage) {
+        return SuccessMessage("Poll Success Created. You can now find it on the explore page!")
+    }
 
     return (
         <>
             <div className="container">
                 <div className="row mb-5 justify-content-center w-80">
-                    <div className="col-md-10">
+                    <div className="col-md-10 mt-2">
 
                             <h2>Create Poll</h2>
                             <form onSubmit={handleSubmit} autoComplete="off">
