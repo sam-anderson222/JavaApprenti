@@ -39,21 +39,12 @@ public class mySqlPollOptionRepo implements PollOptionRepository {
         String sql = "SELECT * FROM poll_options WHERE poll_id = ? ORDER BY option_number";
 
         try {
-            return jdbcTemplate.query(sql, PollOptionMapper.pollOptionRowMapper(), pollId);
-        } catch (Exception ex) {
-            throw new DatabaseErrorException();
-        }
-    }
-
-    @Override
-    public Optional<PollOption> getCertainPollOptionFromPoll(Integer pollId, Integer optionNumber) {
-        String sql = "SELECT * FROM poll_options WHERE poll_id = ? AND option_number = ?";
-
-        try {
-            PollOption po = jdbcTemplate.queryForObject(sql, PollOptionMapper.pollOptionRowMapper(), pollId, optionNumber);
-            return Optional.of(po);
-        } catch (EmptyResultDataAccessException ex) { // If no user found with this id.
-            return Optional.empty();
+            List<PollOption> options = jdbcTemplate.query(sql, PollOptionMapper.pollOptionRowMapper(), pollId);
+            if (options.size() < 2) {
+                throw new DatabaseErrorException();
+            } else {
+                return options;
+            }
         } catch (Exception ex) {
             throw new DatabaseErrorException();
         }

@@ -8,6 +8,5 @@ import java.util.Optional;
 public interface PollOptionRepository {
     List<PollOption>getAllPollOptions();
     List<PollOption> getAllPollOptionsForPoll(Integer pollId);
-    Optional<PollOption> getCertainPollOptionFromPoll(Integer pollId, Integer optionNumber);
     boolean saveOptionsForPoll(Integer pollId, List<PollOption> options);
 }

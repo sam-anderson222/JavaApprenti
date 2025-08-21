@@ -33,20 +33,6 @@ public class VoxPopuliApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<User> users = userRepo.getAllUsers();
-		List<Poll> polls = pollRepo.getAllPolls();
-
-		for (User u : users) {
-			System.out.println(u);
-		}
-
-		for (Poll p : polls) {
-			List<PollOption> pollOptions = pollOptionRepo.getAllPollOptionsForPoll(p.getPollId());
-			System.out.println(p);
-			for (PollOption po : pollOptions) {
-				System.out.println("\t" + po);
-			}
-		}
 
 	}
 }
